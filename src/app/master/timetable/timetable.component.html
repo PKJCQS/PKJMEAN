@@ -1,0 +1,116 @@
+<div class="block-header">
+  <h2>
+    Subjects List
+  </h2>
+</div>
+<!-- Exportable Table -->
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="header">
+        <h2>SUBJECTS</h2>
+      </div>
+      <div class="body">
+        <div class="table-responsive">
+
+          <table
+                  class="table table-bordered table-striped table-hover dataTable js-exportable">
+            <thead>
+            <tr>
+              <th *ngFor="let c of columns" [class.address-th]="c.key =='sn'">
+                <div *ngIf="c.isSortable" (click)="SortBy(c.key)" class="sorting-column">
+                  {{ c.title }}
+                  <i *ngIf="query.sortBy === c.key" class="material-icons">{{query.isSortAscending === -1 ?  'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+                </div>
+                <div *ngIf="!c.isSortable">
+                  {{ c.title }}
+                </div>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let subject of subjects; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{subject.data.name}}</td>
+              <td>
+                  <div *ngIf="subject.timetable">
+                      Start On : <strong>{{subject.timetable?.startTime}}</strong> <br>
+                      End On : <strong>{{subject.timetable?.endTime}}</strong> <br>
+                      Comment : <strong>{{subject.timetable?.comment}}</strong> <br>
+                      Teacher : <strong>{{subject.timetable?.teacher?.firstName + ' ' + subject.timetable?.teacher?.lastName}}</strong> <br>
+                    <a [routerLink]="['../edit/',subject.timetable._id]" class="btn btn-primary"><i _ngcontent-c2="" class="material-icons">edit</i></a>
+                  </div>
+                  <a *ngIf="!subject.timetable" [routerLink]="['../add-new/', classroom ,subject.data._id]" class="btn btn-primary"><i _ngcontent-c2="" class="material-icons">add</i></a>
+              </td>
+            </tr>
+            <tr *ngIf="isLoader">
+                <td colspan="3" align="center">
+                    <div class="preloader">
+                        <div class="spinner-layer pl-light-blue">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf="subjects?.length == 0">
+              <td colspan="4" align="center">No data found!</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <mat-paginator [length]="pages"
+                       [pageIndex]="pageIndex"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="pageSizeOptions"
+                       (page)="pageEvent = setPageData($event)">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #END# Exportable Table -->
+
+<!-- Default Size -->
+<div class="modal fade" id="addTimetable" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="defaultModalLabel">Modal title</h4>
+      </div>
+      <form id="form_validation" method="POST" (ngSubmit)="saveTimetable($event)">
+          <div class="modal-body">
+              <div class="form-group form-float">
+                  <select name="teacher" class="form-control show-tick selectpicker" [(ngModel)]="timetable.teacher" required>
+                    <option value="">Select Teacher</option>
+                    <option *ngFor="let t of teachers" [value]="t._id" [selected]="t._id === timetable.teacher">{{ t.firstName + ' ' + t.lastName }}</option>
+                  </select>
+              </div>
+              <div class="form-group form-float">
+                  <mat-input-container>
+                      <input matInput="" (mouseenter) ="loadDatepicker('startTime')" class="timepickerstartTime" placeholder="Start Time" name="startTime" [(ngModel)]="timetable.startTime"  required >
+                  </mat-input-container>
+              </div>
+              <div class="form-group form-float">
+                  <mat-input-container>
+                      <input matInput="" (mouseenter) ="loadDatepicker('endTime')" class="timepickerendTime" placeholder="End Time" name="endTime" [(ngModel)]="timetable.endTime" required >
+                  </mat-input-container>
+              </div>
+              <div class="form-group form-float">
+              <mat-input-container>
+                  <textarea matInput="" placeholder="Comment" name="comment" [(ngModel)]="timetable.comment"  required ></textarea>
+              </mat-input-container>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-link waves-effect">SAVE</button>
+            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
