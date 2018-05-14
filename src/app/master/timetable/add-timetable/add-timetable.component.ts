@@ -52,6 +52,12 @@ export class AddTimetableComponent implements OnInit, AfterViewInit {
             this.teachers = response;
         });
   }
+
+  ngOnInit() {
+  }
+  setTime(event, type) {
+        this.timetable[type] = event.target.value;
+  }
     loadDatepicker(ith) {
         if (this.timepicker.indexOf(ith) === -1) {
             this.timepicker.push(ith);
@@ -62,8 +68,6 @@ export class AddTimetableComponent implements OnInit, AfterViewInit {
             });
         }
     }
-  ngOnInit() {
-  }
   ngAfterViewInit() {
       $('#form_validation').validate({
           rules: {

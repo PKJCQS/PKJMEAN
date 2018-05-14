@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddTimetableComponent } from './add-timetable.component';
+import { ViewAllSchoolsComponent } from './view-all-schools.component';
 
-describe('AddSchoolComponent', () => {
-  let component: AddTimetableComponent;
-  let fixture: ComponentFixture<AddTimetableComponent>;
+describe('ViewAllSchoolsComponent', () => {
+  let component: ViewAllSchoolsComponent;
+  let fixture: ComponentFixture<ViewAllSchoolsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddTimetableComponent ]
+      declarations: [ ViewAllSchoolsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddTimetableComponent);
+    fixture = TestBed.createComponent(ViewAllSchoolsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

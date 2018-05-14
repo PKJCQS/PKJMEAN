@@ -48,6 +48,12 @@ import {ViewAllBussComponent} from '../../../master/bus/read/view-all-buses/view
 import {TimetableComponent} from '../../../master/timetable/timetable.component';
 import {AddTimetableComponent} from '../../../master/timetable/add-timetable/add-timetable.component';
 
+import {AddZoneTypeComponent} from '../../../master/zoneType/create/add-zoneType/add-zoneType.component';
+import {ViewAllZoneTypesComponent} from '../../../master/zoneType/read/view-all-zoneTypes/view-all-zoneTypes.component';
+
+import {AddZoneComponent} from '../../../master/zone/create/add-zone/add-zone.component';
+import {ViewAllZonesComponent} from '../../../master/zone/read/view-all-zones/view-all-zones.component';
+
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'cpanel'},
   {
@@ -219,6 +225,30 @@ const routes: Routes = [
         {
             path: 'master/timetable/edit/:id',
             component: AddTimetableComponent
+        },
+        {
+            path: 'master/zoneType/add-new',
+            component: AddZoneTypeComponent
+        },
+        {
+            path: 'master/zoneType/edit/:id',
+            component: AddZoneTypeComponent
+        },
+        {
+            path: 'master/zoneType/view-all',
+            component: ViewAllZoneTypesComponent
+        },
+        {
+            path: 'master/zone/add-new',
+            component: AddZoneComponent
+        },
+        {
+            path: 'master/zone/edit/:id',
+            component: AddZoneComponent
+        },
+        {
+            path: 'master/zone/view-all',
+            component: ViewAllZonesComponent
         },
     ],
     canActivate: [AuthGuard]

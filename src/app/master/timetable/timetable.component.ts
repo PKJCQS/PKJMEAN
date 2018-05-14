@@ -55,7 +55,6 @@ export class TimetableComponent implements OnInit {
               this.isLoader = false;
           });
       });
-
   }
 
   ngOnInit() {

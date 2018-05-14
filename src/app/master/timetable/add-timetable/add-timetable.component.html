@@ -11,8 +11,7 @@
         <h2>Timetable Details</h2>
       </div>
       <div class="body">
-        <form id="form_validation" method="POST" (ngSubmit)="saveTimetable($event)">
-
+        <form id="form_validation" method="POST"  (ngSubmit)="saveTimetable($event)">
           <div class="form-group form-float">
             <mat-form-field>
               <mat-select placeholder="Select Teacher"  name="teacher" [(ngModel)]="timetable.teacher">
@@ -23,18 +22,14 @@
             </mat-form-field>
           </div>
           <div class="form-group form-float">
-              <mat-form-field>
-                  <input matInput [matTimepicker]="picker" placeholder="Start Time" name="startTime" [(ngModel)]="timetable.startTime" [value]="timetable.startTime"  required>
-                  <mat-timepicker-toggle matSuffix [for]="picker"></mat-timepicker-toggle>
-                  <mat-timepicker #picker color="primary"></mat-timepicker>
-              </mat-form-field>
+              <mat-input-container>
+                  <input matInput=""  (mouseenter) ="loadDatepicker(1)" [ngClass]="'timepicker1'" placeholder="Start Time"  value="{{timetable.startTime}}" name="startTime" [(ngModel)]="timetable.startTime" (mouseout)="setTime($event,'startTime')" [ngModelOptions]="{ standalone : true }"  required/>
+              </mat-input-container>
           </div>
           <div class="form-group form-float">
-              <mat-form-field>
-                  <input matInput [matTimepicker]="picker1" placeholder="End Time" name="endTime" [(ngModel)]="timetable.endTime" [value]="timetable.endTime" required>
-                  <mat-timepicker-toggle matSuffix [for]="picker1"></mat-timepicker-toggle>
-                  <mat-timepicker #picker1 color="primary"></mat-timepicker>
-              </mat-form-field>
+              <mat-input-container>
+                  <input matInput [ngClass]="'timepicker2'" placeholder="End Time" name="endTime" [(ngModel)]="timetable.endTime" value="{{timetable.endTime}}" (mouseout)="setTime($event,'endTime')" [ngModelOptions]="{ standalone : true }"  (mouseenter) ="loadDatepicker(2)" required>
+              </mat-input-container>
           </div>
           <div class="form-group form-float">
             <mat-input-container>

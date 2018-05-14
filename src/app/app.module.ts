@@ -52,7 +52,7 @@ import {AddDriverComponent} from './master/driver/create/add-driver/add-driver.c
 import {ViewAllDriversComponent} from './master/driver/read/view-all-drivers/view-all-drivers.component';
 import { DriverService } from './master/driver/driver.service';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
-import { Angular5TimePickerModule } from 'angular5-time-picker';
+
 import {
     MatButtonModule,
     MatFormFieldModule,
@@ -78,6 +78,13 @@ import { TimetableComponent } from './master/timetable/timetable.component';
 import { AddTimetableComponent } from './master/timetable/add-timetable/add-timetable.component';
 import { TimetableService } from './master/timetable/timetable.service';
 
+import {AddZoneTypeComponent} from './master/zoneType/create/add-zoneType/add-zoneType.component';
+import {ViewAllZoneTypesComponent} from './master/zoneType/read/view-all-zoneTypes/view-all-zoneTypes.component';
+import { ZoneTypeService } from './master/zoneType/zoneType.service';
+
+import {AddZoneComponent} from './master/zone/create/add-zone/add-zone.component';
+import {ViewAllZonesComponent} from './master/zone/read/view-all-zones/view-all-zones.component';
+import { ZoneService } from './master/zone/zone.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -115,6 +122,12 @@ import { TimetableService } from './master/timetable/timetable.service';
       AddBusComponent,
       ViewAllBussComponent,
 
+      AddZoneTypeComponent,
+      ViewAllZoneTypesComponent,
+
+      AddZoneComponent,
+      ViewAllZonesComponent,
+
       AddDriverComponent,
       ViewAllDriversComponent,
       TimetableComponent,
@@ -140,7 +153,6 @@ import { TimetableService } from './master/timetable/timetable.service';
       AmazingTimePickerModule,
       NgxMaterialTimepickerModule.forRoot(),
       ReactiveFormsModule,
-      Angular5TimePickerModule,
       AgmCoreModule.forRoot({
           apiKey: 'AIzaSyCewgd_uWWVfRe8OurbMguxE3BABXONUfg',
           libraries: [ 'places' ]
@@ -177,6 +189,8 @@ import { TimetableService } from './master/timetable/timetable.service';
     CookieService,
     DriverService,
     TimetableService,
+    ZoneTypeService,
+    ZoneService,
     BusService
   ],
   bootstrap: [AppComponent]

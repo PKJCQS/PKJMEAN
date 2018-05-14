@@ -54,7 +54,6 @@ export class TimetableService {
         );
     }
     public save(data) {
-        console.log(data);
         const obj = this;
         let url = '/api/timetables/add.json';
         let param = {};
