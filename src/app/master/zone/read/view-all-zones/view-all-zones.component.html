@@ -48,12 +48,10 @@
             <tbody>
             <tr *ngFor="let zone of zones; let i=index">
               <td>{{(pageSize* pageIndex)+i+1}}</td>
-              <td>{{zone.uuid}}</td>
-              <td>{{zone.mac}}</td>
-              <td>{{zone.major}}</td>
-              <td>{{zone.minor}}</td>
-              <td>{{zone.password}}</td>
+              <td>{{zone.name}}</td>
+              <td>{{zone.zoneType.name}}</td>
               <td>{{zone.school.name}}</td>
+              <td>{{zone.gateway.mac}}</td>
               <td>
                 <mat-slide-toggle
                         name="isActive" [(ngModel)]="zone.isActive" [checked]="zone.isActive" [color]="color"

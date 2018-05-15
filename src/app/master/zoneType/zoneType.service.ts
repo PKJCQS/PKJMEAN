@@ -14,7 +14,7 @@ export class ZoneTypeService {
             map(res =>  res)
         );
     }
-    public getAllIdCardsWithFilter(str: any) {
+    public getAllZoneTypesWithFilter(str: any) {
         const obj = this;
         return this.http.get('/api/zoneTypes/autocomplete.json/' + str, {
             responseType: 'json'

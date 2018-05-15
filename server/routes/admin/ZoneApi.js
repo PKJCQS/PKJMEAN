@@ -1,9 +1,11 @@
 var loadRoutes = function (db, router, crypto) {
     // Get all posts
     var model = db.loadModel('Zone');
-    var fields = '_id isActive mac uuid major minor password school createdOn createdBy modifiedOn modifiedBy';
+    var fields = '_id isActive name zoneType gateway school createdOn createdBy modifiedOn modifiedBy';
     router.get('/zones\.:ext/:page/:pageSize/:sortBy/:sortType?', function (req, res) {
         db.loadModel('School');
+        db.loadModel('ZoneType');
+        db.loadModel('Gateway');
         var skip = parseInt(req.params.pageSize * req.params.page);
         var pagination = new Object();
         if(parseInt(req.params.pageSize))
@@ -23,7 +25,7 @@ var loadRoutes = function (db, router, crypto) {
                 data.total = count;
                 res.status(200).json(data);
             });
-        }).populate('school')
+        }).populate('school').populate('zoneType').populate('gateway')
             .exec().then(function (doc) {
         });
     });
@@ -62,10 +64,9 @@ var loadRoutes = function (db, router, crypto) {
     });
     router.post('/zones/update\.:ext?', function (req, res) {
         model.findByIdAndUpdate(req.body.zone._id,req.body.zone, function (err, doc) {
-        });
-
-        model.findOne({_id: req.body.zone._id},fields, function (err, doc) {
-            res.status(200).json(doc);
+            model.findOne({_id: req.body.zone._id},fields, function (err, doc) {
+                res.status(200).json(doc);
+            });
         });
     });
     router.get('/zones/delete\.:ext/:id?', function (req, res) {

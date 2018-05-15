@@ -56,13 +56,11 @@ export class ZoneService {
                 responseType: 'json',
                 zone: {
                     _id: data['_id'],
-                    mac: data['mac'],
-                    uuid: data['uuid'],
+                    name: data['name'],
+                    zoneType: data['zoneType'],
                     school: data['school'],
-                    password: data['password'],
+                    gateway: data['gateway'],
                     isActive: data['isActive'],
-                    major: data['major'],
-                    minor: data['minor'],
                     modifiedOn: new Date(),
                     modifiedBy: this.authService.loggedId
                 }
@@ -71,13 +69,11 @@ export class ZoneService {
             param = {
                 responseType: 'json',
                 zone: {
-                    mac: data['mac'],
+                    name: data['name'],
+                    zoneType: data['zoneType'],
                     school: data['school'],
-                    uuid: data['uuid'],
-                    major: data['major'],
-                    password: data['password'],
+                    gateway: data['gateway'],
                     isActive: data['isActive'],
-                    minor: data['minor'],
                     createdOn: new Date(),
                     createdBy: this.authService.loggedId
                 }

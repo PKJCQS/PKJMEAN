@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const zoneSchema = new mongoose.Schema({
         isActive: Boolean,
         name: String,
-        type:{type: mongoose.Schema.ObjectId, ref: 'ZoneType'},
+        zoneType:{type: mongoose.Schema.ObjectId, ref: 'ZoneType'},
         school:{type: mongoose.Schema.ObjectId, ref: 'School'},
+        gateway :{type: mongoose.Schema.ObjectId,ref :'Gateway'},
         createdOn: String,
         createdBy: String,
         modifiedOn: String,
