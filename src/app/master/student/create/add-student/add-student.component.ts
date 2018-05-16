@@ -3,11 +3,11 @@ import {Component, OnInit, AfterViewInit} from '@angular/core';
 import { } from 'googlemaps';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SchoolService} from '../../../school/school.service';
-import {ClassroomService} from '../../../classroom/classroom.service';
 import {Title} from '@angular/platform-browser';
 import {ParentService} from '../../../parent/parent.service';
 import {PickupService} from '../../../pickup/pickup.service';
 import {IdcardService} from '../../../idcard/idcard.service';
+import {ZoneService} from '../../../zone/zone.service';
 declare var $: any;
 
 @Component({
@@ -31,7 +31,7 @@ export class AddStudentComponent implements OnInit, AfterViewInit {
     constructor( private studentService: StudentService,
                  private route: Router,
                  private schoolService: SchoolService,
-                 private classroomService: ClassroomService,
+                 private zoneService: ZoneService,
                  private parentService: ParentService,
                  private pickupService: PickupService,
                  private idcardService: IdcardService,
@@ -51,7 +51,7 @@ export class AddStudentComponent implements OnInit, AfterViewInit {
         this.schoolService.getAllSchoolsWithFilter('').subscribe(response => {
             this.options = response;
         });
-        this.classroomService.getAllClassroomsWithFilter('').subscribe(response => {
+        this.zoneService.getAllClassroom('').subscribe(response => {
             this.classrooms = response;
         });
         this.parentService.getAllParentsWithFilter('').subscribe(response => {

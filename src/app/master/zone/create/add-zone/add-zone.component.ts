@@ -1,11 +1,11 @@
 import { ZoneService } from '../../zone.service';
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import { } from 'googlemaps';
-
 import {ActivatedRoute, Router} from '@angular/router';
 import {SchoolService} from '../../../school/school.service';
+import {ZoneTypeService} from '../../../zoneType/zoneType.service';
+import {GatewayService} from '../../../gateway/gateway.service';
 declare var $: any;
-
 
 @Component({
   selector: 'app-add-zone',
@@ -13,32 +13,40 @@ declare var $: any;
   styleUrls: ['./add-zone.component.css']
 })
 export class AddZoneComponent implements OnInit, AfterViewInit {
-    /*public myControl = new FormControl();
-    public filteredOptions: any;*/
     public zone: any;
     public zoneId: string;
     private options: any;
+    private zoneTypes: any;
+    private gateways: any;
     constructor( private zoneService: ZoneService,
                  private route: Router,
                  private schoolService: SchoolService,
+                 private zoneTypeService: ZoneTypeService,
+                 private gatewayService: GatewayService,
                  private route1: ActivatedRoute) {
       this.zone = [];
-      this.zone.password = 'minew123';
       const zoneId = this.route1.params.subscribe(params => {
           this.zoneId =  params['id']; // (+) converts string 'id' to a number
-
-          // In a real app: dispatch action to load the details here.
       });
-      // this.myControl = new FormControl();
-      // params( 'id' );
       if ( this.zoneId ) {
           this.zoneService.getZone( this.zoneId).subscribe(response => {
               this.zone = response;
+          });
+          this.gatewayService.getAllGatewaysWithFilter('').subscribe(response => {
+              this.gateways = response;
+          });
+      } else {
+          this.gatewayService.getAllGatewaysNotInUse('').subscribe(response => {
+              this.gateways = response;
           });
       }
         this.schoolService.getAllSchoolsWithFilter('').subscribe(response => {
             this.options = response;
         });
+        this.zoneTypeService.getAllZoneTypesWithFilter('').subscribe(response => {
+            this.zoneTypes = response;
+        });
+
   }
   ngOnInit() {
   }
@@ -71,6 +79,5 @@ export class AddZoneComponent implements OnInit, AfterViewInit {
               this.route.navigate(['cpanel/master/zone/view-all']);
           });
       }
-      // this.cookieService.put('putting', 'putty');
    }
 }

@@ -2,7 +2,7 @@ import { TimetableService } from '../timetable.service';
 import {Component, OnInit, AfterViewInit, Inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TeacherService} from '../../teacher/teacher.service';
-import {ClassroomService} from '../../classroom/classroom.service';
+import {ZoneService} from '../../zone/zone.service';
 declare var $: any;
 
 
@@ -19,7 +19,7 @@ export class AddTimetableComponent implements OnInit, AfterViewInit {
     constructor( private timetableService: TimetableService,
                  private route: Router,
                  private teacherService: TeacherService,
-                 private classroomService: ClassroomService,
+                 private zoneService: ZoneService,
                  private route1: ActivatedRoute) {
       this.timetable = [];
       const timetableId = this.route1.params.subscribe(params => {
@@ -30,7 +30,7 @@ export class AddTimetableComponent implements OnInit, AfterViewInit {
     const classroom = this.route1.params.subscribe(params => {
         this.timetable['classroom'] =  params['classroom']; // (+) converts string 'id' to a number
         if (params['classroom']) {
-            this.classroomService.getClassroom(params['classroom']).subscribe(response => {
+            this.zoneService.getZone(params['classroom']).subscribe(response => {
                 this.timetable['school'] = response['school'];
             });
         }
@@ -51,6 +51,7 @@ export class AddTimetableComponent implements OnInit, AfterViewInit {
         this.teacherService.getAllTeachersWithFilter('').subscribe(response => {
             this.teachers = response;
         });
+
   }
 
   ngOnInit() {

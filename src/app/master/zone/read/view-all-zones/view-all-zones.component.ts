@@ -17,12 +17,10 @@ export class ViewAllZonesComponent implements OnInit, AfterViewInit {
     public pageSizeOptions = [5, 10, 25, 100];
     public columns = [
         { key: 'sn', title: 'S. No.', isSortable: false },
-        { key: 'uuid', title: 'UUID', isSortable: true},
-        { key: 'mac', title: 'MAC', isSortable: true},
-        { key: 'major', title: 'Major', isSortable: true},
-        { key: 'minor', title: 'Minor', isSortable: true},
-        { key: 'password', title: 'Password', isSortable: true},
-        { key: 'school', title: 'School', isSortable: false},
+        { key: 'name', title: 'Name', isSortable: true},
+        { key: 'zoneType', title: 'Zone Type', isSortable: true},
+        { key: 'school', title: 'School', isSortable: true},
+        { key: 'gateway', title: 'Gateway', isSortable: true},
         { key: 'isActive', title: 'IsActive', isSortable: true},
         { key: 'action', title: 'Action', isSortable: false}
     ];
@@ -41,13 +39,6 @@ export class ViewAllZonesComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
     ngAfterViewInit() {
-        /*$('.js-exportable').DataTable({
-            dom: 'Bfrtip',
-            responsive: true,
-            buttons: [
-                'pdf'
-            ]
-        });*/
     }
     public setPageData(event: PageEvent) {
         console.log( event );

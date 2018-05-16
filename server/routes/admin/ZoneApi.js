@@ -1,9 +1,11 @@
 var loadRoutes = function (db, router, crypto) {
     // Get all posts
     var model = db.loadModel('Zone');
-    var fields = '_id isActive mac uuid major minor password school createdOn createdBy modifiedOn modifiedBy';
+    var fields = '_id isActive name zoneType school gateway createdOn createdBy modifiedOn modifiedBy';
     router.get('/zones\.:ext/:page/:pageSize/:sortBy/:sortType?', function (req, res) {
         db.loadModel('School');
+        db.loadModel('ZoneType');
+        db.loadModel('Gateway');
         var skip = parseInt(req.params.pageSize * req.params.page);
         var pagination = new Object();
         if(parseInt(req.params.pageSize))
@@ -23,7 +25,7 @@ var loadRoutes = function (db, router, crypto) {
                 data.total = count;
                 res.status(200).json(data);
             });
-        }).populate('school')
+        }).populate('school').populate('zoneType').populate('gateway')
             .exec().then(function (doc) {
         });
     });
@@ -35,7 +37,12 @@ var loadRoutes = function (db, router, crypto) {
         });
     });
     router.get('/zones/autocomplete\.:ext/:str?', function (req, res) {
-        model.find({'uuid' : new RegExp(req.params.str, 'i'),'isActive':true}, '_id uuid isActive', function (err, doc) {
+        model.find({'name' : new RegExp(req.params.str, 'i'),'isActive':true}, fields, function (err, doc) {
+            res.status(200).json(doc);
+        });
+    });
+    router.get('/zones/classroom\.:ext//:str?', function (req, res) {
+        model.find({'name' : new RegExp(req.params.str, 'i'), zoneType : "5af9940299f676087c6d3235", isActive : true}, fields, function (err, doc) {
             res.status(200).json(doc);
         });
     });

@@ -5,7 +5,7 @@ import {TimetableService} from './timetable.service';
 import {PageEvent} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SchoolService} from '../school/school.service';
-import {ClassroomService} from '../classroom/classroom.service';
+import {ZoneService} from '../zone/zone.service';
 declare var $: any;
 
 @Component({
@@ -18,7 +18,9 @@ export class TimetableComponent implements OnInit {
     public schools: any;
     public teachers: any;
     public classroomDtl: any;
+    public class: string;
     public timetable = {};
+    public classrooms: any;
     public isLoader = false;
     public pages: number;
     public pageIndex = 0;
@@ -38,14 +40,18 @@ export class TimetableComponent implements OnInit {
   constructor(private teacherService: TeacherService,
               private subjectService: SubjectService,
               private timetableService: TimetableService,
-              private classroomService: ClassroomService,
+              private zoneService: ZoneService,
               private schoolService: SchoolService,
               private route: Router,
               private route1: ActivatedRoute) {
+      this.zoneService.getAllClassroom('').subscribe(response => {
+          this.classrooms = response;
+      });
+      this.subjects = {};
       const classId = this.route1.params.subscribe(params => {
           this.classroom =  params['class'];
           this.isLoader = true;
-          this.classroomService.getClassroom(this.classroom).subscribe(response => {
+          this.zoneService.getZone(this.classroom).subscribe(response => {
               this.classroomDtl = response;
           });
           this.subjectService.getSubjectsWithTimetable(this.classroom,
@@ -63,11 +69,15 @@ export class TimetableComponent implements OnInit {
         this.pageIndex = event.pageIndex;
         this.pageSize = event.pageSize;
         this.isLoader = true;
-        this.subjectService.getSubjectsWithTimetable(this.classroom,this.pageIndex, this.pageSize, this.query).subscribe(response3 => {
+        this.subjectService.getSubjectsWithTimetable(this.classroom, this.pageIndex, this.pageSize, this.query).subscribe(response3 => {
             this.subjects = response3['data'];
             this.pages = Math.ceil(response3['total'] / this.pageSize);
             this.isLoader = false;
         });
+    }
+    public setClassroom(class1) {
+        console.log(class1)
+        this.route.navigate(['cpanel/master/timetable/', class1 ]);
     }
     public SortBy(sortKey: string) {
         this.query.sortBy = sortKey;

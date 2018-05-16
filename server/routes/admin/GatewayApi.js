@@ -39,16 +39,16 @@ var loadRoutes = function (db, router, crypto) {
             res.status(200).json(doc);
         });
     });
-    router.get('/gateways/autocomplete-not-in-classroom\.:ext/:str?', function (req, res) {
-        var  classroom = db.loadModel('Classroom');
-        classroom.find({}, function (err, doc) {
-            var used = doc.map(function (cl) { return cl.gateway; });
-            model.find({_id:{
-                    $nin: used
-                },'isActive': true}, '_id mac isActive', function (err, doc) {
-                res.status(200).json(doc);
+    router.get('/gateways/autocomplete-not-in-use\.:ext/:str?', function (req, res) {
+        var zone = db.loadModel('Zone');
+            zone.find({}, function (err, doc) {
+                var usedZ = doc.map(function (st) { return st.gateway; });
+                model.find({_id:{
+                        $nin: usedZ,
+                    },'isActive': true}, '_id mac isActive', function (err, doc) {
+                    res.status(200).json(doc);
+                });
             });
-        });
     });
     router.get('/gateways/view\.:ext/:id?', function (req, res) {
         db.loadModel('School');

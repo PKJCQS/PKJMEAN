@@ -12,7 +12,15 @@
       </div>
       <div class="body">
         <div class="table-responsive">
-
+                <div class="form-group form-float">
+                    <mat-form-field>
+                        <mat-select placeholder="Select Teacher"  name="class" [(ngModel)]="class" (change)="setClassroom($event)">
+                            <mat-option *ngFor="let c of classrooms" [value]="c._id">
+                                {{ c.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
           <table
                   class="table table-bordered table-striped table-hover dataTable js-exportable">
             <thead>
@@ -74,43 +82,3 @@
   </div>
 </div>
 <!-- #END# Exportable Table -->
-
-<!-- Default Size -->
-<div class="modal fade" id="addTimetable" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="defaultModalLabel">Modal title</h4>
-      </div>
-      <form id="form_validation" method="POST" (ngSubmit)="saveTimetable($event)">
-          <div class="modal-body">
-              <div class="form-group form-float">
-                  <select name="teacher" class="form-control show-tick selectpicker" [(ngModel)]="timetable.teacher" required>
-                    <option value="">Select Teacher</option>
-                    <option *ngFor="let t of teachers" [value]="t._id" [selected]="t._id === timetable.teacher">{{ t.firstName + ' ' + t.lastName }}</option>
-                  </select>
-              </div>
-              <div class="form-group form-float">
-                  <mat-input-container>
-                      <input matInput="" (mouseenter) ="loadDatepicker('startTime')" class="timepickerstartTime" placeholder="Start Time" name="startTime" [(ngModel)]="timetable.startTime"  required >
-                  </mat-input-container>
-              </div>
-              <div class="form-group form-float">
-                  <mat-input-container>
-                      <input matInput="" (mouseenter) ="loadDatepicker('endTime')" class="timepickerendTime" placeholder="End Time" name="endTime" [(ngModel)]="timetable.endTime" required >
-                  </mat-input-container>
-              </div>
-              <div class="form-group form-float">
-              <mat-input-container>
-                  <textarea matInput="" placeholder="Comment" name="comment" [(ngModel)]="timetable.comment"  required ></textarea>
-              </mat-input-container>
-          </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-link waves-effect">SAVE</button>
-            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-          </div>
-      </form>
-    </div>
-  </div>
-</div>

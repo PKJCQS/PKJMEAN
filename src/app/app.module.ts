@@ -9,9 +9,7 @@ import { ApplicationRoutingModule, routingComponents } from './common/routings/a
 import { CookieService } from 'angular2-cookie/core';
 
 import { SchoolService } from './master/school/school.service';
-import {AddClassroomComponent} from './master/classroom/create/add-classroom/add-classroom.component';
-import {ViewAllClassroomsComponent} from './master/classroom/read/view-all-classrooms/view-all-classrooms.component';
-import { ClassroomService } from './master/classroom/classroom.service';
+
 
 import {AddParentComponent} from './master/parent/create/add-parent/add-parent.component';
 import {ViewAllParentsComponent} from './master/parent/read/view-all-parents/view-all-parents.component';
@@ -92,8 +90,6 @@ import { ZoneService } from './master/zone/zone.service';
     ProfileComponent,
     ViewAllSchoolsComponent,
     AddSchoolComponent,
-    AddClassroomComponent,
-    ViewAllClassroomsComponent,
 
       AddParentComponent,
       ViewAllParentsComponent,
@@ -177,7 +173,6 @@ import { ZoneService } from './master/zone/zone.service';
     UserService,
     AuthGuard,
     SchoolService,
-    ClassroomService,
     ParentService,
     PickupService,
     RouteService,

@@ -13,9 +13,6 @@ import { ProfileComponent } from '../../../user/profile/profile.component';
 import {AddSchoolComponent} from '../../../master/school/create/add-school/add-school.component';
 import { ViewAllSchoolsComponent } from '../../../master/school/read/view-all-schools/view-all-schools.component';
 
-import {AddClassroomComponent} from '../../../master/classroom/create/add-classroom/add-classroom.component';
-import {ViewAllClassroomsComponent} from '../../../master/classroom/read/view-all-classrooms/view-all-classrooms.component';
-
 import {AddParentComponent} from '../../../master/parent/create/add-parent/add-parent.component';
 import {ViewAllParentsComponent} from '../../../master/parent/read/view-all-parents/view-all-parents.component';
 
@@ -100,19 +97,6 @@ const routes: Routes = [
         {
             path: 'master/idcard/view-all',
             component: ViewAllIdcardsComponent
-        },
-
-        {
-            path: 'master/classroom/add-new',
-            component: AddClassroomComponent
-        },
-        {
-            path: 'master/classroom/edit/:id',
-            component: AddClassroomComponent
-        },
-        {
-            path: 'master/classroom/view-all',
-            component: ViewAllClassroomsComponent
         },
 
         {

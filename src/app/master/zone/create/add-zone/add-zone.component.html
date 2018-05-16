@@ -16,28 +16,19 @@
 
           <div class="form-group form-float">
             <mat-input-container>
-              <input matInput="" placeholder="Zone MAC" name="mac" [(ngModel)]="zone.mac"  required >
+              <input matInput="" placeholder="Zone Name" name="name" [(ngModel)]="zone.name"  required >
             </mat-input-container>
           </div>
           <div class="form-group form-float">
-            <mat-input-container>
-              <input matInput="" placeholder="Zone UUID" name="uuid" [(ngModel)]="zone.uuid"  required >
-            </mat-input-container>
+            <mat-form-field>
+              <mat-select placeholder="Select Zone Type"  name="zoneType" [(ngModel)]="zone.zoneType">
+                <mat-option *ngFor="let type of zoneTypes" [value]="type._id">
+                  {{ type.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
           <div class="form-group form-float">
-            <mat-input-container>
-              <input matInput="" placeholder="Zone Major" name="major" [(ngModel)]="zone.major"  required >
-            </mat-input-container>
-          </div>
-          <div class="form-group form-float">
-            <mat-input-container>
-              <input matInput="" placeholder="Zone Minor" name="minor" [(ngModel)]="zone.minor"  required >
-            </mat-input-container>
-          </div>
-          <div class="form-group form-float">
-            <!--<select class="form-control show-tick selectpicker" name="school" [(ngModel)]="zone.school" data-live-search="true">
-              <option *ngFor="let option of options" [value]="option._id">{{ option.name }}</option>
-            </select>-->
             <mat-form-field>
               <mat-select placeholder="Select school"  name="school" [(ngModel)]="zone.school">
                 <mat-option *ngFor="let option of options" [value]="option._id">
@@ -45,12 +36,15 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-
           </div>
             <div class="form-group form-float">
-                <mat-input-container>
-                    <input matInput="" placeholder="Zone Password" name="password" [(ngModel)]="zone.password"  required >
-                </mat-input-container>
+                <mat-form-field>
+                    <mat-select placeholder="Select Gateway"  name="gateway" [(ngModel)]="zone.gateway">
+                        <mat-option *ngFor="let gateway1 of gateways" [value]="gateway1._id">
+                            {{ gateway1.mac }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
           <div class="form-group form-float">
             <!--<mat-input-container>-->
@@ -60,7 +54,7 @@
               Status
             </mat-slide-toggle>
           </div>
-          <button class="btn btn-primary waves-effect" type="submit">SAVE IDCARD</button>
+          <button class="btn btn-primary waves-effect" type="submit">SAVE ZONE</button>
         </form>
       </div>
     </div>

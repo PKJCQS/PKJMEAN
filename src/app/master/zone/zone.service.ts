@@ -14,9 +14,15 @@ export class ZoneService {
             map(res =>  res)
         );
     }
-    public getAllIdCardsWithFilter(str: any) {
-        const obj = this;
+    public getAllZonesWithFilter(str: any) {
         return this.http.get('/api/zones/autocomplete.json/' + str, {
+            responseType: 'json'
+        }).pipe(
+            map(res =>  res)
+        );
+    }
+    public getAllClassroom(str: any) {
+        return this.http.get('/api/zones/classroom.json/' + str, {
             responseType: 'json'
         }).pipe(
             map(res =>  res)
@@ -38,7 +44,6 @@ export class ZoneService {
         );
     }
     public delete(id: string) {
-        const obj = this;
         return this.http.get('/api/zones/delete.json/' + id, {
             responseType: 'json'
         }).pipe(
@@ -46,8 +51,6 @@ export class ZoneService {
         );
     }
     public save(data: any) {
-        // console.log(data);
-        const obj = this;
         let url = '/api/zones/add.json';
         let param = {};
         if (data['_id']) {
@@ -56,13 +59,11 @@ export class ZoneService {
                 responseType: 'json',
                 zone: {
                     _id: data['_id'],
-                    mac: data['mac'],
-                    uuid: data['uuid'],
+                    name: data['name'],
+                    zoneType: data['zoneType'],
                     school: data['school'],
-                    password: data['password'],
+                    gateway: data['gateway'],
                     isActive: data['isActive'],
-                    major: data['major'],
-                    minor: data['minor'],
                     modifiedOn: new Date(),
                     modifiedBy: this.authService.loggedId
                 }
@@ -71,13 +72,11 @@ export class ZoneService {
             param = {
                 responseType: 'json',
                 zone: {
-                    mac: data['mac'],
+                    name: data['name'],
+                    zoneType: data['zoneType'],
                     school: data['school'],
-                    uuid: data['uuid'],
-                    major: data['major'],
-                    password: data['password'],
+                    gateway: data['gateway'],
                     isActive: data['isActive'],
-                    minor: data['minor'],
                     createdOn: new Date(),
                     createdBy: this.authService.loggedId
                 }

@@ -22,8 +22,8 @@ export class GatewayService {
             map(res =>  res)
         );
     }
-    public getAllGatewaysNotInClassrrom(str: any){
-        return this.http.get('/api/gateways/autocomplete-not-in-classroom.json/' + str, {
+    public getAllGatewaysNotInUse(str: any){
+        return this.http.get('/api/gateways/autocomplete-not-in-use.json/' + str, {
             responseType: 'json'
         }).pipe(
             map(res =>  res)
