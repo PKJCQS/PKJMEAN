@@ -1,4 +1,5 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {ActivationEnd, Router} from '@angular/router';
 declare var $: any, Waves: any;
 
 @Component({
@@ -7,13 +8,21 @@ declare var $: any, Waves: any;
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-
-  constructor() {}
+  public show = false;
+  constructor(private route: Router) {
+      this.route.events.subscribe(event => {
+          if (event instanceof ActivationEnd) {
+             /* console.log(event, this.show);
+              this.show = this.show ? false : true;*/
+          }
+      });
+  }
 
   ngOnInit() {
   }
   ngAfterViewInit() {
     this.setFirstTimeEvents();
+    // this.route.navigate(['cpanel/dashboard']);
   }
   setFirstTimeEvents() {
     setTimeout(function() {

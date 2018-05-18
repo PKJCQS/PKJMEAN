@@ -1,6 +1,6 @@
 <div class="block-header">
   <h2>
-    Subjects List
+    Timetable
   </h2>
 </div>
 <!-- Exportable Table -->
@@ -8,13 +8,13 @@
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
       <div class="header">
-        <h2>SUBJECTS</h2>
+        <h2>TIMETABLE FOR CLASS {{classroomDtl.name ? classroomDtl.name : ''}}</h2>
       </div>
       <div class="body">
         <div class="table-responsive">
                 <div class="form-group form-float">
                     <mat-form-field>
-                        <mat-select placeholder="Select Teacher"  name="class" [(ngModel)]="class" (change)="setClassroom($event)">
+                        <mat-select placeholder="Select Classroom"  name="classroom" [(ngModel)]="classroom" (change)="setClassroom($event)">
                             <mat-option *ngFor="let c of classrooms" [value]="c._id">
                                 {{ c.name }}
                             </mat-option>
@@ -22,10 +22,10 @@
                     </mat-form-field>
                 </div>
           <table
-                  class="table table-bordered table-striped table-hover dataTable js-exportable">
+                  class="table table-bordered table-striped table-hover dataTable js-exportable" *ngIf="subjects?.length > 0">
             <thead>
             <tr>
-              <th *ngFor="let c of columns" [class.address-th]="c.key =='sn'">
+              <th *ngFor="let c of columns">
                 <div *ngIf="c.isSortable" (click)="SortBy(c.key)" class="sorting-column">
                   {{ c.title }}
                   <i *ngIf="query.sortBy === c.key" class="material-icons">{{query.isSortAscending === -1 ?  'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>

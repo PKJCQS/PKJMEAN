@@ -1,44 +1,46 @@
-import { DriverService } from '../../driver.service';
+import { StaffService } from '../../staff.service';
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import { } from 'googlemaps';
-
 import {ActivatedRoute, Router} from '@angular/router';
 import {SchoolService} from '../../../school/school.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 declare var $: any;
 
 
 @Component({
-  selector: 'app-add-driver',
-  templateUrl: './add-driver.component.html',
-  styleUrls: ['./add-driver.component.css']
+  selector: 'app-add-staff',
+  templateUrl: './add-staff.component.html',
+  styleUrls: ['./add-staff.component.css']
 })
-export class AddDriverComponent implements OnInit, AfterViewInit {
-
-    public driver: any;
-    public driverId: string;
+export class AddStaffComponent implements OnInit, AfterViewInit {
+    public staff: any;
+    public staffId: string;
     private options: any;
-    constructor( private driverService: DriverService,
+    public color = 'primary';
+    public form: FormGroup;
+    constructor( private staffService: StaffService,
                  private route: Router,
                  private schoolService: SchoolService,
+                 private formBuilder: FormBuilder,
                  private route1: ActivatedRoute) {
-        this.driver = [];
-        const driverId = this.route1.params.subscribe(params => {
-            this.driverId = params['id']; // (+) converts string 'id' to a number
-
-            // In a real app: dispatch action to load the details here.
-        });
-        // this.myControl = new FormControl();
-        // params( 'id' );
-        if (this.driverId) {
-            this.driverService.getDriver(this.driverId).subscribe(response => {
-                this.driver = response;
-            });
-        }
+      this.staff = [];
+      const staffId = this.route1.params.subscribe(params => {
+          this.staffId =  params['id']; // (+) converts string 'id' to a number
+      });
+      if ( this.staffId ) {
+          this.staffService.getStaff( this.staffId).subscribe(response => {
+              this.staff = response;
+          });
+      }
         this.schoolService.getAllSchoolsWithFilter('').subscribe(response => {
             this.options = response;
         });
-    }
+  }
   ngOnInit() {
+      this.form = this.formBuilder.group({
+          school: [null, [Validators.required]]
+      });
+
   }
   ngAfterViewInit() {
       $('#form_validation').validate({
@@ -61,14 +63,12 @@ export class AddDriverComponent implements OnInit, AfterViewInit {
           }
       });
   }
-
-  public saveDriver(event) {
-      if ($('#form_validation').valid()) {
-          this.driverService.save(this.driver).subscribe(response => {
-              this.driver = response;
-              this.route.navigate(['cpanel/master/driver/view-all']);
+  public saveStaff(event: boolean) {
+      if ($('#form_validation').valid() && event) {
+          this.staffService.save(this.staff).subscribe(response => {
+              this.staff = response;
+              this.route.navigate(['cpanel/master/staff/view-all']);
           });
       }
-      // this.cookieService.put('putting', 'putty');
    }
 }

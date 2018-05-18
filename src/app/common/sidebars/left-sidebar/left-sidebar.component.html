@@ -34,8 +34,11 @@
 	<div class="menu">
 		<ul class="list">
 			<li class="header">MAIN NAVIGATION</li>
-			<li><a [routerLink]="['']"> <i class="material-icons">home</i>
+			<li><a [routerLink]="['dashboard']"> <i class="material-icons">home</i>
 					<span>Home</span>
+			</a></li>
+			<li><a [routerLink]="['master/timetable']"> <i class="material-icons">access_time</i>
+				<span>Timetable</span>
 			</a></li>
 			<li><a href="javascript:void(0);" class="menu-toggle"> <i
 					class="material-icons">folder</i> <span>Master</span>
@@ -47,6 +50,14 @@
 						<ul class="ml-menu">
 							<li><a [routerLink]="['master/school/add-new']">Add New</a></li>
 							<li><a [routerLink]="['master/school/view-all']">View All</a></li>
+						</ul>
+					</li>
+					<li><a href="javascript:void(0);" class="menu-toggle"> <i
+							class="material-icons">folder</i> <span>Staffs</span>
+					</a>
+						<ul class="ml-menu">
+							<li><a [routerLink]="['master/staff/add-new']">Add New</a></li>
+							<li><a [routerLink]="['master/staff/view-all']">View All</a></li>
 						</ul>
 					</li>
 					<li><a href="javascript:void(0);" class="menu-toggle"> <i

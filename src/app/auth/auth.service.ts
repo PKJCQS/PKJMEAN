@@ -27,5 +27,39 @@ export class AuthService {
           map(res =>  res)
       );
    }
-
+    public staffLogin(phone: String, password: String) {
+        return this.http.post('/api/staffs/login.json', {
+            responseType: 'json',
+            phone: phone,
+            password: password
+        }).pipe(
+            map(res =>  res)
+        );
+    }
+    public staffforgot(email: string) {
+        return this.http.post('/api/staffs/forgot-password.json', {
+            responseType: 'json',
+            email: email
+        }).pipe(
+            map(res =>  res)
+        );
+    }
+    public verifyOtp(otp: string, email: string) {
+        return this.http.post('/api/staffs/verify-otp.json', {
+            responseType: 'json',
+            otp: otp,
+            email: email
+        }).pipe(
+            map(res =>  res)
+        );
+    }
+    public changePassword(password: string, staffId: any) {
+        return this.http.post('/api/staffs/update.json', {
+            responseType: 'json',
+            password: password,
+            _id: staffId
+        }).pipe(
+            map(res =>  res)
+        );
+    }
 }

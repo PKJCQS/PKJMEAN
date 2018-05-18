@@ -48,7 +48,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         });
     }
     public saveProfile(event) {
-        console.log(this.user);
         this.userService.updateUserData( this.user, this.userInfo ).subscribe(response => {
             if ( response ) {
                 // console.log(data);
@@ -59,7 +58,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     }
     public updateData(data) {
         if ( data ) {
-            console.log(data);
             this.route.navigate(['cpanel/user/profile']);
         }
         return false;

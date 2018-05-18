@@ -50,12 +50,20 @@ import {ViewAllZoneTypesComponent} from '../../../master/zoneType/read/view-all-
 
 import {AddZoneComponent} from '../../../master/zone/create/add-zone/add-zone.component';
 import {ViewAllZonesComponent} from '../../../master/zone/read/view-all-zones/view-all-zones.component';
-
+import {HomeComponent} from '../../../common/home/home.component';
+import {AddStaffComponent} from '../../../master/staff/create/add-staff/add-staff.component';
+import {ViewAllStaffsComponent} from '../../../master/staff/read/view-all-staffs/view-all-staffs.component';
+import {StaffloginComponent} from '../../../auth/stafflogin/stafflogin.component';
+import {StaffforgotComponent} from '../../../auth/staffforgot/staffforgot.component';
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'cpanel'},
   {
     path: 'cpanel', component: DashboardComponent,
     children: [
+      {
+        path: 'dashboard',
+        component: HomeComponent
+      },
       {
           path: 'user/profile',
           component: ProfileComponent
@@ -199,6 +207,10 @@ const routes: Routes = [
             component: ViewAllBussComponent
         },
         {
+            path: 'master/timetable',
+            component: TimetableComponent
+        },
+        {
             path: 'master/timetable/:class',
             component: TimetableComponent
         },
@@ -234,6 +246,18 @@ const routes: Routes = [
             path: 'master/zone/view-all',
             component: ViewAllZonesComponent
         },
+        {
+            path: 'master/staff/add-new',
+            component: AddStaffComponent
+        },
+        {
+            path: 'master/staff/edit/:id',
+            component: AddStaffComponent
+        },
+        {
+            path: 'master/staff/view-all',
+            component: ViewAllStaffsComponent
+        },
     ],
     canActivate: [AuthGuard]
   },
@@ -241,6 +265,18 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+    {
+        path: 'staff-login',
+        component: StaffloginComponent
+    },
+    {
+        path: 'staff-login/:schoolId',
+        component: StaffloginComponent
+    },
+    {
+        path: 'staff-forgot-password/:schoolId',
+        component: StaffforgotComponent
+    },
   {
     path: 'register',
     component: RegisterComponent
@@ -265,5 +301,7 @@ export const routingComponents = [
   RightSidebarComponent,
   DashboardComponent,
   LoginComponent,
+  StaffloginComponent,
+  StaffforgotComponent,
   RegisterComponent
 ];

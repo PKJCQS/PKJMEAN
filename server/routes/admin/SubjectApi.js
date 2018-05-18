@@ -2,7 +2,6 @@ var loadRoutes = function (db, router, crypto) {
     // Get all posts
     var fields = '_id name isActive createdOn createdBy modifiedOn modifiedBy';
     var Subject = db.loadModel('Subject');
-    var forEach = require('async-foreach').forEach;
     var Async = require('async');
     var Timetable = db.loadModel('Timetable');
     router.get('/subjects\.:ext/:page/:pageSize/:sortBy/:sortType?', function (req, res) {

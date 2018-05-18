@@ -53,6 +53,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 import {
     MatButtonModule,
+    MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
@@ -83,6 +84,11 @@ import { ZoneTypeService } from './master/zoneType/zoneType.service';
 import {AddZoneComponent} from './master/zone/create/add-zone/add-zone.component';
 import {ViewAllZonesComponent} from './master/zone/read/view-all-zones/view-all-zones.component';
 import { ZoneService } from './master/zone/zone.service';
+import { HomeComponent } from './common/home/home.component';
+import { HomeService } from './common/home/home.service';
+import {AddStaffComponent} from './master/staff/create/add-staff/add-staff.component';
+import {ViewAllStaffsComponent} from './master/staff/read/view-all-staffs/view-all-staffs.component';
+import {StaffService} from './master/staff/staff.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -124,10 +130,14 @@ import { ZoneService } from './master/zone/zone.service';
       AddZoneComponent,
       ViewAllZonesComponent,
 
+      AddStaffComponent,
+      ViewAllStaffsComponent,
+
       AddDriverComponent,
       ViewAllDriversComponent,
       TimetableComponent,
-      AddTimetableComponent
+      AddTimetableComponent,
+      HomeComponent
   ],
   imports: [
       BrowserModule,
@@ -145,6 +155,7 @@ import { ZoneService } from './master/zone/zone.service';
       MatAutocompleteModule,
       MatSlideToggleModule,
       MatSelectModule,
+      MatProgressBarModule,
       FormsModule,
       AmazingTimePickerModule,
       NgxMaterialTimepickerModule.forRoot(),
@@ -186,7 +197,9 @@ import { ZoneService } from './master/zone/zone.service';
     TimetableService,
     ZoneTypeService,
     ZoneService,
-    BusService
+    BusService,
+    StaffService,
+    HomeService
   ],
   bootstrap: [AppComponent]
 })

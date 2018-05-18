@@ -1,0 +1,100 @@
+<div class="login-box">
+    <div class="logo">
+        <a href="javascript:void(0);">{{schoolDtl.name}}<b> Smartymove</b></a>
+        <small>School Security System</small>
+    </div>
+    <div class="card">
+        <div class="body">
+            <form *ngIf="forgot" id="sign_forgot" method="POST" (submit)="stopDefaultSubmit(this)">
+                <div class="msg">Enter email id  to reset password</div>
+                <div class="msg">Password reset s</div>
+                <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+
+                    <mat-input-container>
+                        <input matInput="" name="email" #email placeholder="Email Id" required autofocus>
+                    </mat-input-container>
+                    <label id="email-error" class="error" *ngIf="invalid">Email id invalid.</label>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-xs-4">
+                        <button mat-button="" type="submit" (click)="submitForgot(email.value)">SUBMIT
+                        </button>
+                    </div>
+                </div>
+                <div class="row m-t-15 m-b--20">
+                    <div class="col-xs-6 align-right">
+                        <a [routerLink]="['/staff-login/', schoolId]">Back To Login</a>
+                    </div>
+                </div>
+            </form>
+            <form *ngIf="otp" id="sign_otp" method="POST" (submit)="otpSubmit(this)">
+                <div class="msg">OTP Sent on you email id, Please enter Below</div>
+                <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">person</i>
+                        </span>
+
+                    <mat-input-container>
+                        <input matInput="" name="otp" #otp placeholder="OTP" required autofocus>
+                    </mat-input-container>
+
+
+                </div>
+                <div class="row">
+
+                    <div class="col-xs-4">
+                        <button mat-button="" type="submit" (click)="submitOTP(otp.value)">SUBMIT
+                        </button>
+                    </div>
+                </div>
+                <div class="row m-t-15 m-b--20">
+                    <div class="col-xs-6 align-right">
+                        <a [routerLink]="['staff-login/', schoolId]">Back To Login</a>
+                    </div>
+                </div>
+            </form>
+            <form *ngIf="reset" id="sign_reset" method="POST" (submit)="resetSubmit(this)">
+                <div class="msg">Enter email id  to reset password</div>
+                <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+
+                    <mat-input-container>
+                        <input matInput="" type="password" name="password" #password placeholder="Password" required autofocus>
+                    </mat-input-container>
+
+
+                </div>
+                <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+
+                    <mat-input-container>
+                        <input matInput="" type="password" name="confpassword" #confpassword placeholder="Confirm Password" equalTo="password" required autofocus>
+                    </mat-input-container>
+
+
+                </div>
+                <div class="row">
+
+                    <div class="col-xs-4">
+                        <button mat-button="" type="submit" (click)="submitReset(password.value)">SUBMIT
+                        </button>
+                    </div>
+                </div>
+                <div class="row m-t-15 m-b--20">
+                    <div class="col-xs-6 align-right">
+                        <a [routerLink]="['staff-login/', schoolId]">Back To Login</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if ($('#sign_in').valid()) {
       this.authService.login(username, password).subscribe( response => {
           if ( response) {
-              console.log(response);
               if ('_id' in  response) {
                   this.authService.isLoggedIn = true;
                   this.cookieService.put('loggedUser', response['_id']);

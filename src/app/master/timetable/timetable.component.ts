@@ -17,8 +17,7 @@ export class TimetableComponent implements OnInit {
     public subjects: any;
     public schools: any;
     public teachers: any;
-    public classroomDtl: any;
-    public class: string;
+    public classroomDtl = {};
     public timetable = {};
     public classrooms: any;
     public isLoader = false;
@@ -50,16 +49,18 @@ export class TimetableComponent implements OnInit {
       this.subjects = {};
       const classId = this.route1.params.subscribe(params => {
           this.classroom =  params['class'];
-          this.isLoader = true;
-          this.zoneService.getZone(this.classroom).subscribe(response => {
-              this.classroomDtl = response;
-          });
-          this.subjectService.getSubjectsWithTimetable(this.classroom,
-              this.pageIndex, this.pageSize, this.query).subscribe(response2 => {
-              this.subjects = response2['data'];
-              this.pages = Math.ceil(response2['total'] / this.pageSize);
-              this.isLoader = false;
-          });
+          if (params['class']) {
+              this.isLoader = true;
+              this.zoneService.getZone(this.classroom).subscribe(response => {
+                  this.classroomDtl = response;
+              });
+              this.subjectService.getSubjectsWithTimetable(this.classroom,
+                  this.pageIndex, this.pageSize, this.query).subscribe(response2 => {
+                  this.subjects = response2['data'];
+                  this.pages = Math.ceil(response2['total'] / this.pageSize);
+                  this.isLoader = false;
+              });
+          }
       });
   }
 
@@ -76,8 +77,8 @@ export class TimetableComponent implements OnInit {
         });
     }
     public setClassroom(class1) {
-        console.log(class1)
-        this.route.navigate(['cpanel/master/timetable/', class1 ]);
+        this.classroom = class1.value;
+        this.route.navigate(['cpanel/master/timetable/', class1.value ]);
     }
     public SortBy(sortKey: string) {
         this.query.sortBy = sortKey;

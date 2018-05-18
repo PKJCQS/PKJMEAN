@@ -15,14 +15,14 @@ var loadRoutes = function (db, router, crypto) {
         const userInfoModel = db.loadModel('UserInfo');
 
         const newUser = new userModel({
-            username: 'mandeepsinghn',
+            username: 'admin',
             password: crypto.encrypt('mastertrack'),
             isActive: true
         });
         const userInfo = new userInfoModel({
-            firstName: 'Mandeep',
-            lastName: 'Nain',
-            middleName: 'Singh'
+            firstName: 'Pradeep',
+            lastName: 'Kumar',
+            middleName: 'Jangra'
         });
 
         userModel.create(newUser, function (err, obj) {

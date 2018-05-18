@@ -1,0 +1,70 @@
+<div class="block-header">
+  <h2>
+    Staffs List <small>{{ staff.name ? "Edit" : "Add" }} Staff</small>
+  </h2>
+</div>
+<!--<script src="https://raw.githubusercontent.com/sindresorhus/screenfull.js/gh-pages/dist/screenfull.js"></script>-->
+<!-- Basic Validation -->
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="header">
+        <h2>Staff Details</h2>
+      </div>
+      <div class="body">
+        <form id="form_validation" method="POST" (ngSubmit)="saveStaff($event)">
+
+          <div class="form-group form-float">
+            <mat-input-container>
+              <input matInput="" placeholder="First Name" name="fname" [(ngModel)]="staff.fname"  required >
+            </mat-input-container>
+          </div>
+          <div class="form-group form-float">
+            <mat-input-container>
+              <input matInput="" placeholder="Last Name" name="lname" [(ngModel)]="staff.lname"  required >
+            </mat-input-container>
+          </div>
+          <div class="form-group form-float">
+            <mat-input-container>
+              <input matInput="" placeholder="Email Id" name="email" [(ngModel)]="staff.email"  required >
+            </mat-input-container>
+          </div>
+          <div class="form-group form-float">
+            <mat-input-container>
+              <input matInput="" placeholder="Mobile No." name="phone" [(ngModel)]="staff.phone"  required >
+            </mat-input-container>
+          </div>
+          <div class="form-group form-float">
+            <mat-input-container>
+              <input matInput="" type="password" placeholder="Password" name="password" [(ngModel)]="staff.password"  [required]=" staff._id ? false : true " >
+            </mat-input-container>
+          </div>
+          <div class="form-group form-float">
+            <mat-form-field>
+              <mat-select placeholder="Select school"  name="school" [(ngModel)]="staff.school" required>
+                <mat-option *ngFor="let option of options" [value]="option._id">
+                  {{ option.name }}
+                </mat-option>
+              </mat-select>
+
+            </mat-form-field>
+              <div [hidden]="staff.school">
+                  <small class="text-danger">Please select school</small>
+              </div>
+          </div>
+
+          <div class="form-group form-float">
+            <mat-slide-toggle
+                    name="isActive" [(ngModel)]="staff.isActive" [checked]="staff.isActive" [color]="color"
+            >
+              Status
+            </mat-slide-toggle>
+          </div>
+            <!--<button type="button" onClick="screenfull.request();">Screenfull</button>-->
+          <button class="btn btn-primary waves-effect" [disabled]="!staff.school" type="submit">SAVE STAFF</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #END# Basic Validation -->

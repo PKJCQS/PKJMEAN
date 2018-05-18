@@ -1,6 +1,7 @@
 var loadRoutes = function (db, router, crypto) {
     // Get all posts
     var model = db.loadModel('Zone');
+    var Async = require('async');
     var fields = '_id isActive name zoneType school gateway createdOn createdBy modifiedOn modifiedBy';
     router.get('/zones\.:ext/:page/:pageSize/:sortBy/:sortType?', function (req, res) {
         db.loadModel('School');
@@ -40,6 +41,21 @@ var loadRoutes = function (db, router, crypto) {
         model.find({'name' : new RegExp(req.params.str, 'i'),'isActive':true}, fields, function (err, doc) {
             res.status(200).json(doc);
         });
+    });
+    router.get('/zones/getAllZonesByType\.:ext/?', function (req, res) {
+        var types = db.loadModel('ZoneType');
+        types.find({},function(error, zoneTypes){
+            var data = new Object();
+            Async.map(zoneTypes,function(item, callback) {
+                model.find({zoneType : item._id,'isActive':true}, fields, function (err, doc) {
+                    callback(null,{zoneType:item, zone: doc});
+                });
+            },function(err,results) {
+                data = results;
+                res.status(200).json(data);
+            });
+        });
+
     });
     router.get('/zones/classroom\.:ext//:str?', function (req, res) {
         model.find({'name' : new RegExp(req.params.str, 'i'), zoneType : "5af9940299f676087c6d3235", isActive : true}, fields, function (err, doc) {
