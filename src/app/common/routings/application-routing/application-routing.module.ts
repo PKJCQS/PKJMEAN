@@ -53,6 +53,10 @@ import {ViewAllZoneTypesComponent} from '../../../master/zoneType/read/view-all-
 
 import {AddZoneComponent} from '../../../master/zone/create/add-zone/add-zone.component';
 import {ViewAllZonesComponent} from '../../../master/zone/read/view-all-zones/view-all-zones.component';
+import {AddEmployeeComponent} from '../../../master/employee/create/add-employee/add-employee.component';
+import {ViewAllEmployeesComponent} from '../../../master/employee/read/view-all-employees/view-all-employees.component';
+import {ViewAllEmployeeTypesComponent} from '../../../master/employeeType/read/view-all-employeeTypes/view-all-employeeTypes.component';
+import {AddEmployeeTypeComponent} from '../../../master/employeeType/create/add-employeeType/add-employeeType.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'cpanel'},
@@ -249,6 +253,30 @@ const routes: Routes = [
         {
             path: 'master/zone/view-all',
             component: ViewAllZonesComponent
+        },
+        {
+            path: 'master/employeeType/add-new',
+            component: AddEmployeeTypeComponent
+        },
+        {
+            path: 'master/employeeType/edit/:id',
+            component: AddEmployeeTypeComponent
+        },
+        {
+            path: 'master/employeeType/view-all',
+            component: ViewAllEmployeeTypesComponent
+        },
+        {
+            path: 'master/employee/add-new',
+            component: AddEmployeeComponent
+        },
+        {
+            path: 'master/employee/edit/:id',
+            component: AddEmployeeComponent
+        },
+        {
+            path: 'master/employee/view-all',
+            component: ViewAllEmployeesComponent
         },
     ],
     canActivate: [AuthGuard]

@@ -85,6 +85,12 @@ import { ZoneTypeService } from './master/zoneType/zoneType.service';
 import {AddZoneComponent} from './master/zone/create/add-zone/add-zone.component';
 import {ViewAllZonesComponent} from './master/zone/read/view-all-zones/view-all-zones.component';
 import { ZoneService } from './master/zone/zone.service';
+import { AddEmployeeComponent } from './master/employee/create/add-employee/add-employee.component';
+import { ViewAllEmployeesComponent } from './master/employee/read/view-all-employees/view-all-employees.component';
+import { EmployeeService } from './master/employee/employee.service';
+import { AddEmployeeTypeComponent } from './master/employeeType/create/add-employeeType/add-employeeType.component';
+import { ViewAllEmployeeTypesComponent } from './master/employeeType/read/view-all-employeeTypes/view-all-employeeTypes.component';
+import {EmployeeTypeService} from './master/employeeType/employeeType.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -131,7 +137,11 @@ import { ZoneService } from './master/zone/zone.service';
       AddDriverComponent,
       ViewAllDriversComponent,
       TimetableComponent,
-      AddTimetableComponent
+      AddTimetableComponent,
+      AddEmployeeComponent,
+      ViewAllEmployeesComponent,
+      AddEmployeeTypeComponent,
+      ViewAllEmployeeTypesComponent
   ],
   imports: [
       BrowserModule,
@@ -191,6 +201,8 @@ import { ZoneService } from './master/zone/zone.service';
     TimetableService,
     ZoneTypeService,
     ZoneService,
+    EmployeeService,
+    EmployeeTypeService,
     BusService
   ],
   bootstrap: [AppComponent]
