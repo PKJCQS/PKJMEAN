@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       function getLenth(myObject) {
           var key, count = 0;
           for ( key in myObject ) {
-              if(myObject.hasOwnProperty(key)) {
+              if (myObject.hasOwnProperty(key)) {
                   count++;
               }
           }
