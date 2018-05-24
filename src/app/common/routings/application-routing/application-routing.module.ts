@@ -55,6 +55,9 @@ import {AddStaffComponent} from '../../../master/staff/create/add-staff/add-staf
 import {ViewAllStaffsComponent} from '../../../master/staff/read/view-all-staffs/view-all-staffs.component';
 import {StaffloginComponent} from '../../../auth/stafflogin/stafflogin.component';
 import {StaffforgotComponent} from '../../../auth/staffforgot/staffforgot.component';
+import {StaffauthGuard} from '../../../auth/staffauth.guard';
+import {StaffdashboardComponent} from '../../../application/staffdashboard/staffdashboard.component';
+import {StaffhomeComponent} from '../../../staff/home/home.component';
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'cpanel'},
   {
@@ -261,6 +264,16 @@ const routes: Routes = [
     ],
     canActivate: [AuthGuard]
   },
+    {
+        path: 'staff-cpanel', component: StaffdashboardComponent,
+        children: [
+            {
+                path: 'dashboard',
+                component: StaffhomeComponent
+            },
+        ],
+        canActivate: [StaffauthGuard]
+    },
   {
     path: 'login',
     component: LoginComponent
@@ -303,5 +316,6 @@ export const routingComponents = [
   LoginComponent,
   StaffloginComponent,
   StaffforgotComponent,
+  StaffdashboardComponent,
   RegisterComponent
 ];

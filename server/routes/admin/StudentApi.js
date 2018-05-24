@@ -1,7 +1,7 @@
 var loadRoutes = function (db, router, crypto) {
     // Get all posts
     var model = db.loadModel('Student');
-    var fields = '_id isActive firstName middleName lastName gender classroom aadhar parent pickup rollNo idcard school address createdOn createdBy modifiedOn modifiedBy';
+    var fields = '_id isActive firstName middleName lastName gender classroom aadhar parent access pickup rollNo idcard school address createdOn createdBy modifiedOn modifiedBy';
     router.get('/students\.:ext/:page/:pageSize/:sortBy/:sortType?', function (req, res) {
         db.loadModel('Idcard');
         db.loadModel('School');
@@ -41,11 +41,12 @@ var loadRoutes = function (db, router, crypto) {
             middleName: req.body.student.middleName,
             lastName: req.body.student.lastName,
             gender: req.body.student.gender,
-            classRoom: req.body.student.classRoom,
+            classroom: req.body.student.classroom,
             idcard: req.body.student.idcard,
             school: req.body.student.school,
             address:req.body.student.address,
             aadhar: req.body.student.aadhar,
+            access: req.body.student.access,
             parent:req.body.student.parent,
             pickup:req.body.student.pickup,
             rollNo:req.body.student.rollNo,
@@ -67,28 +68,17 @@ var loadRoutes = function (db, router, crypto) {
     });
     router.get('/students/view.:ext/:id?', function (req, res) {
         model.findOne({_id : req.params.id},fields, function (err, doc) {
-            var data = new Object();
-            data.data = doc;
-            if(doc) {
-                modelInfo.find({student: req.params.id}, 'subject', function (err, doc1) {
-                    data.subjects = doc1;
-                    res.status(200).json(data);
-                });
-            }
+            res.status(200).json(doc);
         });
     });
     router.get('/students/getDetail\.:ext/:id', function (req, res) {
-        db.loadModel('StudentInfo');
         model.findOne({_id : req.params.id}, fields, function (err, doc) {
             // delete doc.password;
             res.status(200).json(doc);
-        }).populate('studentInfo')
-            .exec().then(function (doc) {
         });
     });
     router.post('/students/update\.:ext?', function (req, res) {
         const studentModel = model;
-        const studentInfoModel = db.loadModel('StudentInfo');
 
         const studentData = {
             isActive: req.body.student.isActive,
@@ -96,24 +86,23 @@ var loadRoutes = function (db, router, crypto) {
             middleName: req.body.student.middleName,
             lastName: req.body.student.lastName,
             gender: req.body.student.gender,
-            classRoom: req.body.student.classRoom,
+            classroom: req.body.student.classroom,
             idcard: req.body.student.idcard,
             school: req.body.student.school,
             address:req.body.student.address,
             aadhar: req.body.student.aadhar,
             parent:req.body.student.parent,
+            access:req.body.student.access,
             pickup:req.body.student.pickup,
             rollNo:req.body.student.rollNo,
             modifiedOn: req.body.student.modifiedOn,
             modifiedBy: req.body.student.modifiedBy
         };
-
+        // console.log(studentData);
         studentModel.findByIdAndUpdate(req.body.student._id,studentData, function (err, doc) {
-        });
-        model.findOne({_id: req.body.student._id},fields, function (err, doc) {
-            res.status(200).json(doc);
-        }).populate('studentInfo')
-            .exec().then(function (doc) {
+            model.findOne({_id: req.body.student._id},fields, function (err, doc) {
+                res.status(200).json(doc);
+            });
         });
     });
     router.get('/students/delete\.:ext/:id?', function (req, res) {

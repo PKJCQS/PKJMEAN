@@ -1,0 +1,12 @@
+<section class="">
+    <div [class.loader-hidden]="!show">
+        <div class="loader-overlay">
+            <div>
+                <mat-progress-bar mode="indeterminate" *ngIf="show"></mat-progress-bar>
+            </div>
+        </div>
+    </div>
+	<div class="container-fluid">
+		<router-outlet></router-outlet>
+	</div>
+</section>

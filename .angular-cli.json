@@ -25,6 +25,7 @@
         "./assets/plugins/bootstrap-select/css/bootstrap-select.css",
         "./assets/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css",
         "./assets/plugins/datetimepicker/bootstrap-datetimepicker.min.css",
+        "./assets/plugins/sweetalert/sweetalert.css",
         "./assets/plugins/morrisjs/morris.css",
         "./assets/css/style.css",
         "./assets/css/themes/all-themes.css"
@@ -54,6 +55,7 @@
         "./assets/plugins/datetimepicker/moment.js",
         "./assets/plugins/datetimepicker/bootstrap-datetimepicker.min.js",
         "./assets/plugins/jquery-countto/jquery.countTo.js",
+        "./assets/plugins/sweetalert/sweetalert.min.js",
         "./assets/plugins/raphael/raphael.min.js",
         "./assets/js/admin.js",
         "./assets/plugins/jquery-validation/jquery.validate.js",

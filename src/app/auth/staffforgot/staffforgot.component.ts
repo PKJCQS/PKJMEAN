@@ -18,7 +18,8 @@ export class StaffforgotComponent implements OnInit, AfterViewInit {
     public forgot = false;
     public otp = false;
     public email: string;
-    public userDtl: any;
+    public userId: any;
+    public notMatch = false;
     public invalid = false;
     public reset = false;
   constructor(private authService: AuthService,
@@ -73,7 +74,7 @@ export class StaffforgotComponent implements OnInit, AfterViewInit {
                         this.forgot = false;
                         this.otp = false;
                         this.reset = true;
-                        this.userDtl = response;
+                        this.userId = response['userId'];
                     } else {
                         this.invalid = true;
                     }
@@ -81,13 +82,18 @@ export class StaffforgotComponent implements OnInit, AfterViewInit {
             });
         }
     }
-    submitReset(password: string) {
+    submitReset(password: string, confpassword: string) {
         if ($('#sign_reset').valid()) {
-            this.authService.changePassword( password, this.userDtl['_id'] ).subscribe( response => {
-                if ( response) {
-                    swal('Good job!', 'You clicked the button!', 'success');
-                }
-            });
+            if (password === confpassword) {
+                this.authService.changePassword(password, this.userId).subscribe(response => {
+                    if (response) {
+                        swal('Success!', 'Your Password changed successfully', 'success');
+                        this.route.navigate(['/staff-login', this.schoolId]);
+                    }
+                });
+            } else {
+                this.notMatch = true;
+            }
         }
     }
 }

@@ -28,6 +28,13 @@ export class ZoneService {
             map(res =>  res)
         );
     }
+    public getAllZoneByTye() {
+        return this.http.get('/api/zones/getAllZonesByType.json/', {
+            responseType: 'json'
+        }).pipe(
+            map(res =>  res)
+        );
+    }
     public getAllZonesNotInClassrrom(str: any) {
         return this.http.get('/api/zones/autocomplete-not-in-teacher-student.json/' + str, {
             responseType: 'json'
@@ -62,6 +69,7 @@ export class ZoneService {
                     name: data['name'],
                     zoneType: data['zoneType'],
                     school: data['school'],
+                    location: data['location'],
                     gateway: data['gateway'],
                     isActive: data['isActive'],
                     modifiedOn: new Date(),
@@ -75,6 +83,7 @@ export class ZoneService {
                     name: data['name'],
                     zoneType: data['zoneType'],
                     school: data['school'],
+                    location: data['location'],
                     gateway: data['gateway'],
                     isActive: data['isActive'],
                     createdOn: new Date(),

@@ -20,6 +20,11 @@
             </mat-input-container>
           </div>
           <div class="form-group form-float">
+            <mat-input-container>
+              <input matInput="" placeholder="Location" name="location" [(ngModel)]="zone.location"  required >
+            </mat-input-container>
+          </div>
+          <div class="form-group form-float">
             <mat-form-field>
               <mat-select placeholder="Select Zone Type"  name="zoneType" [(ngModel)]="zone.zoneType">
                 <mat-option *ngFor="let type of zoneTypes" [value]="type._id">

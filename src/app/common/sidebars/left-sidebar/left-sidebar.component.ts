@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {UserService} from '../../../user/user.service';
+import {Router} from '@angular/router';
+import {CookieService} from 'angular2-cookie/core';
 
 @Component({
   selector: 'app-left-sidebar',
@@ -9,7 +11,9 @@ import {UserService} from '../../../user/user.service';
 export class LeftSidebarComponent implements OnInit, AfterViewInit {
   public Name: any;
   public userEmail: any;
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private route: Router,
+              private cookieService: CookieService) {
     this.userService.getLoggedUserData().subscribe(response => {
         if ( response ) {
             // console.log(data);
@@ -20,7 +24,10 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
         }
     });
   }
-
+  logOut() {
+      this.cookieService.remove('loggedUser' );
+      this.route.navigate(['login']);
+  }
   ngOnInit() {
   }
   ngAfterViewInit() {

@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { CookieService } from 'angular2-cookie/core';
 import {Title} from '@angular/platform-browser';
 import {SchoolService} from '../../master/school/school.service';
+import {StaffService} from '../../master/staff/staff.service';
 
 declare var $: any;
 
@@ -18,10 +19,20 @@ export class StaffloginComponent implements OnInit, AfterViewInit {
   constructor(private authService: AuthService,
               private route: Router,
               private cookieService: CookieService,
+              private staffService: StaffService,
               private schoolService: SchoolService,
               private route1: ActivatedRoute,
               private titleService: Title ) {
       this.route1.params.subscribe(params => {
+          if (this.authService.isLoggedIn) {
+              if (this.cookieService.get('schoolId')) {
+                  this.staffService.getStaff(this.cookieService.get('loggedUser')).subscribe(res => {
+                      if ( res ) {
+                          this.route.navigate(['/staff-cpanel/dashboard']);
+                      }
+                  });
+              }
+          }
           this.schoolDtl = {};
           this.schoolId = params['schoolId']; // (+) converts string 'id' to a number
           if (params['schoolId']) {
@@ -48,8 +59,9 @@ export class StaffloginComponent implements OnInit, AfterViewInit {
           if ( response) {
               if ('_id' in  response) {
                   this.authService.isLoggedIn = true;
-                  this.cookieService.put('loggedUser', response['_id'] + '_STAFF');
-                  this.route.navigate(['cpanel/staff-dashboard']);
+                  this.cookieService.put('loggedUser', response['_id']);
+                  this.cookieService.put('schoolId', this.schoolId);
+                  this.route.navigate(['/staff-cpanel']);
               }
           }
       });

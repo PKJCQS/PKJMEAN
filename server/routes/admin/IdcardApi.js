@@ -49,7 +49,7 @@ var loadRoutes = function (db, router, crypto) {
                 model.find({_id:{
                         $nin: usedT,
                         $nin: usedS,
-                    },'isActive': true}, '_id mac isActive', function (err, doc) {
+                    },'isActive': true}, fields, function (err, doc) {
                     res.status(200).json(doc);
                 });
             });

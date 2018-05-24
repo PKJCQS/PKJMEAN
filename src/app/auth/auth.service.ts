@@ -56,8 +56,10 @@ export class AuthService {
     public changePassword(password: string, staffId: any) {
         return this.http.post('/api/staffs/update.json', {
             responseType: 'json',
-            password: password,
-            _id: staffId
+            staff : {
+                password: password,
+                _id: staffId
+            }
         }).pipe(
             map(res =>  res)
         );

@@ -1,3 +1,6 @@
 agm-map {
     height: 300px;
 }
+.mat-slide-toggle.mat-primary.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb{
+    background-color: #03A9F4;
+}

@@ -63,7 +63,7 @@ var loadRoutes = function (db, router, crypto) {
                 var otp = randomPassword(6);
                 const forgot = new db.loadModel('Forgot')({
                     email: req.body.email,
-                    userDtl: doc,
+                    userId: doc._id,
                     otp : otp,
                     valid: 5
                 });
@@ -89,8 +89,8 @@ var loadRoutes = function (db, router, crypto) {
             }
         });
     });
-    router.get('/staffs/verify-otp\.:ext', function (req, res) {
-        db.loadModel('Forgot').find({'email' : req.body.email,'otp':req.body.otp}, function (err, doc) {
+    router.post('/staffs/verify-otp\.:ext', function (req, res) {
+        db.loadModel('Forgot').findOne({'email' : req.body.email,'otp':req.body.otp},'_id email username userId otp valid createdOn',{sort:{createdOn:-1}}, function (err, doc) {
             if (doc) {
                 var dtNow = new Date();
                 var dt1 = new Date(doc.createdOn);

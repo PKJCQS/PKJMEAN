@@ -7,7 +7,6 @@
         <div class="body">
             <form *ngIf="forgot" id="sign_forgot" method="POST" (submit)="stopDefaultSubmit(this)">
                 <div class="msg">Enter email id  to reset password</div>
-                <div class="msg">Password reset s</div>
                 <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
@@ -27,12 +26,12 @@
                     </div>
                 </div>
                 <div class="row m-t-15 m-b--20">
-                    <div class="col-xs-6 align-right">
+                    <div class="col-xs-12 align-center">
                         <a [routerLink]="['/staff-login/', schoolId]">Back To Login</a>
                     </div>
                 </div>
             </form>
-            <form *ngIf="otp" id="sign_otp" method="POST" (submit)="otpSubmit(this)">
+            <form *ngIf="otp" id="sign_otp" method="POST" (submit)="stopDefaultSubmit(this)">
                 <div class="msg">OTP Sent on you email id, Please enter Below</div>
                 <div class="input-group">
                         <span class="input-group-addon">
@@ -53,12 +52,12 @@
                     </div>
                 </div>
                 <div class="row m-t-15 m-b--20">
-                    <div class="col-xs-6 align-right">
-                        <a [routerLink]="['staff-login/', schoolId]">Back To Login</a>
+                    <div class="col-xs-12 align-center">
+                        <a [routerLink]="['/staff-login/', schoolId]">Back To Login</a>
                     </div>
                 </div>
             </form>
-            <form *ngIf="reset" id="sign_reset" method="POST" (submit)="resetSubmit(this)">
+            <form *ngIf="reset" id="sign_reset" method="POST" (submit)="stopDefaultSubmit(this)">
                 <div class="msg">Enter email id  to reset password</div>
                 <div class="input-group">
                         <span class="input-group-addon">
@@ -75,23 +74,21 @@
                         <span class="input-group-addon">
                             <i class="material-icons">lock</i>
                         </span>
-
                     <mat-input-container>
-                        <input matInput="" type="password" name="confpassword" #confpassword placeholder="Confirm Password" equalTo="password" required autofocus>
+                        <input matInput="" type="password" name="confpassword" #confpassword placeholder="Confirm Password" required autofocus>
                     </mat-input-container>
-
-
+                    <label class="error" *ngIf="notMatch">The password and confirm password must be same.</label>
                 </div>
                 <div class="row">
 
                     <div class="col-xs-4">
-                        <button mat-button="" type="submit" (click)="submitReset(password.value)">SUBMIT
+                        <button mat-button="" type="submit" (click)="submitReset(password.value,confpassword.value)">SUBMIT
                         </button>
                     </div>
                 </div>
                 <div class="row m-t-15 m-b--20">
-                    <div class="col-xs-6 align-right">
-                        <a [routerLink]="['staff-login/', schoolId]">Back To Login</a>
+                    <div class="col-xs-12 align-center">
+                        <a [routerLink]="['/staff-login/', schoolId]">Back To Login</a>
                     </div>
                 </div>
             </form>

@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
               if ('_id' in  response) {
                   this.authService.isLoggedIn = true;
                   this.cookieService.put('loggedUser', response['_id']);
-                  this.route.navigate(['cpanel']);
+                  this.route.navigate(['cpanel/dashboard']);
               }
           }
       });

@@ -18,6 +18,7 @@ export class ViewAllZonesComponent implements OnInit, AfterViewInit {
     public columns = [
         { key: 'sn', title: 'S. No.', isSortable: false },
         { key: 'name', title: 'Name', isSortable: true},
+        { key: 'location', title: 'Location', isSortable: true},
         { key: 'zoneType', title: 'Zone Type', isSortable: true},
         { key: 'school', title: 'School', isSortable: true},
         { key: 'gateway', title: 'Gateway', isSortable: true},

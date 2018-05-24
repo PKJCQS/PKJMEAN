@@ -89,6 +89,9 @@ import { HomeService } from './common/home/home.service';
 import {AddStaffComponent} from './master/staff/create/add-staff/add-staff.component';
 import {ViewAllStaffsComponent} from './master/staff/read/view-all-staffs/view-all-staffs.component';
 import {StaffService} from './master/staff/staff.service';
+import {StaffauthGuard} from './auth/staffauth.guard';
+import {StaffhomeComponent} from './staff/home/home.component';
+import {StaffhomeService} from './staff/home/home.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,7 +140,8 @@ import {StaffService} from './master/staff/staff.service';
       ViewAllDriversComponent,
       TimetableComponent,
       AddTimetableComponent,
-      HomeComponent
+      HomeComponent,
+      StaffhomeComponent
   ],
   imports: [
       BrowserModule,
@@ -183,6 +187,7 @@ import {StaffService} from './master/staff/staff.service';
     AuthService,
     UserService,
     AuthGuard,
+    StaffauthGuard,
     SchoolService,
     ParentService,
     PickupService,
@@ -199,7 +204,8 @@ import {StaffService} from './master/staff/staff.service';
     ZoneService,
     BusService,
     StaffService,
-    HomeService
+    HomeService,
+    StaffhomeService
   ],
   bootstrap: [AppComponent]
 })

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const fcrgotSchema = new mongoose.Schema({
         email: String,
         username: String,
-        userDtl: {},
+        userId: String,
         otp: String,
         valid: String,
         createdOn: { type:Date, default: Date.now,select: false}
