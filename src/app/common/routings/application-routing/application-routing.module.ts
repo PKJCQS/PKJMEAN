@@ -57,7 +57,7 @@ import {StaffloginComponent} from '../../../auth/stafflogin/stafflogin.component
 import {StaffforgotComponent} from '../../../auth/staffforgot/staffforgot.component';
 import {StaffauthGuard} from '../../../auth/staffauth.guard';
 import {StaffdashboardComponent} from '../../../application/staffdashboard/staffdashboard.component';
-import {StaffhomeComponent} from '../../../staff/home/home.component';
+import {StaffhomeComponent} from '../../../staff/staffhome/staffhome.component';
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'cpanel'},
   {

@@ -5,6 +5,7 @@
         <a href="javascript:void(0);" class="align-right" (click)="logOut();">Logout</a>
     </div>
 </div>
+
 <div class="row clearfix">
   <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
     <div class="card">
@@ -42,7 +43,7 @@
   <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
     <div class="card">
       <div class="header">
-        <h2>TASK INFOS</h2>
+        <h2>TASK INFOS {{url}}</h2>
         <ul class="header-dropdown m-r--5">
           <li class="dropdown">
             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -65,20 +66,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>Task A</td>
-            </tr>
-            <tr>
-              <td>Task B</td>
-            </tr>
-            <tr>
-              <td>Task C</td>
-            </tr>
-            <tr>
-              <td>Task D</td>
-            </tr>
-            <tr>
-              <td>Task E</td>
+            <tr *ngFor="let alert of alerts; let i=index;">
+              <td>Task {{alert.createdOn + i}}</td>
             </tr>
             </tbody>
           </table>

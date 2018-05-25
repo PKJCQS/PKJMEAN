@@ -90,8 +90,10 @@ import {AddStaffComponent} from './master/staff/create/add-staff/add-staff.compo
 import {ViewAllStaffsComponent} from './master/staff/read/view-all-staffs/view-all-staffs.component';
 import {StaffService} from './master/staff/staff.service';
 import {StaffauthGuard} from './auth/staffauth.guard';
-import {StaffhomeComponent} from './staff/home/home.component';
-import {StaffhomeService} from './staff/home/home.service';
+import {StaffhomeComponent} from './staff/staffhome/staffhome.component';
+import {StaffhomeService} from './staff/staffhome/staffhome.service';
+
+
 @NgModule({
   declarations: [
     AppComponent,

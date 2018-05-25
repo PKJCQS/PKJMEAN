@@ -61,7 +61,7 @@ export class StaffloginComponent implements OnInit, AfterViewInit {
                   this.authService.isLoggedIn = true;
                   this.cookieService.put('loggedUser', response['_id']);
                   this.cookieService.put('schoolId', this.schoolId);
-                  this.route.navigate(['/staff-cpanel']);
+                  this.route.navigate(['/staff-cpanel/dashboard']);
               }
           }
       });

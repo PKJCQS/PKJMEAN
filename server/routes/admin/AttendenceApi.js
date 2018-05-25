@@ -58,7 +58,13 @@ var loadRoutes = function (db, router, crypto) {
             );
         });
     });
-
+    router.get('/at\.:ext?', function (req, res) {
+        var pagination = new Object();
+            pagination.limit = 10;
+        model.find({},fields, pagination, function (err, doc) {
+            res.status(200).json(doc);
+        })
+    });
     router.get('/attendence/view\.:ext/:id?', function (req, res) {
         model.findOne({_id : req.params.id},fields, function (err, doc) {
             res.status(200).json(doc);
