@@ -39,7 +39,7 @@ var loadRoutes = function (db, router, crypto) {
             }
         });
         regObj = {
-            gateWay_id : req.body[req.body.length-1].mac,
+            gateWay_id : req.params.gateway_id,
             uuids  :     uuids,
             response:   req.body,
             lattitude :  req.body[req.body.length-1].lattitude,
