@@ -9,7 +9,7 @@ declare var $: any;
   styleUrls: ['./staffhome.component.css']
 })
 export class StaffhomeComponent implements OnInit, AfterViewInit {
-    public alerts: any
+    public alerts: any;
     private url = 'http://localhost:5000/';
     private socket;
     private schoolId: any;
@@ -22,7 +22,7 @@ export class StaffhomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
       this.socket = io(this.url);
       this.socket.emit('setSchool', this.schoolId);
-      this.socket.on('latestAtendence', function(data) {
+      this.socket.on('latestAtendence', (data) => {
           this.alerts = data;
           console.log(this.alerts);
       });

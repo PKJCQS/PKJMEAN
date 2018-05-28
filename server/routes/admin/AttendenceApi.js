@@ -39,7 +39,7 @@ var loadRoutes = function (db, router, crypto) {
             }
         });
         regObj = {
-            gateWay_id : req.params.gateway_id,
+            gateWay_id : req.params.gateway_id?req.params.gateway_id:req.body[req.body.length-1].mac,
             uuids  :     uuids,
             response:   req.body,
             lattitude :  req.body[req.body.length-1].lattitude,
@@ -76,6 +76,27 @@ var loadRoutes = function (db, router, crypto) {
 
         model.findOne({_id: req.body.attendence._id},fields, function (err, doc) {
             res.status(200).json(doc);
+        });
+    });
+    router.get('/attendence/updateAll\.:ext?', function (req, res) {
+        var Async = require('async');
+        model.find({},fields, function (err, doc) {
+            Async.map(doc,function(item, callback) {
+                var at = {
+                    gateway_id: 'ac233fc00066',
+                    uuids: item.uuids,
+                    response:item.response,
+                    lattitude: item.lattitude,
+                    longitude: item.longitude,
+                    bearing: item.bearing,
+                    createdOn: item.createdOn
+                }
+                model.findByIdAndUpdate(item._id,at, function (err, dd) {
+                    callback(null, dd);
+                });
+            },function(err,results) {
+                res.status(200).json(results);
+            });
         });
     });
     router.get('/attendence/delete\.:ext/:id?', function (req, res) {
