@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
-
+const dateFormat = require('dateformat');
+var Async = require('async');
 const db1 = require('./server/database/dbConfig');
 // Get our API routes
 
@@ -35,14 +36,30 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server);
 function updateAttendence(school){
-    var pagination = new Object();
-    pagination.limit = 10;
-    db1.loadModel('Gateway').find({'school':school,'isActive': true},function (err,gateways) {
-        //console.log(gateways);
-        var gateways = gateways.map(function (st) { return st.mac; });
-        db1.loadModel('Attendence').find({gateway_id:{
-                $in: gateways,
-            }}, '_id gateway_id uuids response lattitude longitude createdOn bearing', function (err, doc) {
+    var today = dateFormat(new Date(),"yyyy-mm-dd");
+    var start = new Date();
+    start.setHours(0,0,0,0);
+
+    var end = new Date();
+    end.setHours(23,59,59,999);
+    db1.loadModel('Attendence').find({"school_id":school,"createdOn": {$gte: start, $lt: end} }, function (err, doc) {
+        Async.map(doc,function(item, callback) {
+            for(var i=0; i < item.uuids.length; i++){
+                db1.loadModel('Idcard').findOne({uuid:item.uuids[i].uuid},function(err1, doc1){
+                    if(doc1){
+                        db1.loadModel('Student').findOne({idcard:doc1._id},function(err2, doc2){
+                            if(doc2.access.indexOf()){
+                                callback(null, {createdOn: item.createdOn, student:doc2, });
+                            } else{
+                                db1.loadModel('Teacher').findOne({idcard:doc1._id},function(err3, doc3){
+
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        },function(results){
             io.sockets.emit('latestAtendence', doc);
             setTimeout(function(){updateAttendence(school);},5000);
         });

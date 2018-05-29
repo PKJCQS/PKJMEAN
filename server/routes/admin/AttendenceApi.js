@@ -29,34 +29,59 @@ var loadRoutes = function (db, router, crypto) {
     router.post('/attendence/add\.:ext/:gateway_id"?', function (req, res) {
         const attendenceModel = model;
         var uuids = [];
-        req.body.forEach(function (value) {
-            if(value.ibeaconUuid){
+        var uids = [];
+       //  console.log(req.params.gateway_id);
+        for(var i=0; i< req.body.length; i++) {
+            var value = req.body[i];
+            if(value.ibeaconUuid && uids.indexOf(value.ibeaconUuid) >= 0 ){
                 var a = {
                     "uuid" :   value.ibeaconUuid,
                     "mac"  :   value.mac
                 };
                 uuids.push(a);
+                uids.push(value.ibeaconUuid);
             }
-        });
-        regObj = {
-            gateWay_id : req.params.gateway_id?req.params.gateway_id:req.body[req.body.length-1].mac,
-            uuids  :     uuids,
-            response:   req.body,
-            lattitude :  req.body[req.body.length-1].lattitude,
-            longitude :  req.body[req.body.length-1].longitude,
-            bearing :    req.body[req.body.length-1].bearing
+            if(value.gatewayLoad){
+                 var lat = value.lattitude;
+                 var lng = value.longitude;
+                 var bearing = value.bearing;
+            }
         };
-        const newAttendence = new attendenceModel(regObj);
-        attendenceModel.create(newAttendence, function (err, doc) {
-            res.status(200).json(
-                [
-                    {
-                        "Status": true,
-                        "Msg": "Successfully Added"
-                    }
-                 ]
-            );
+        db.loadModel('Gateway').findOne({mac:req.params.gateway_id},function(err, gt){
+            db.loadModel('Zone').findOne({gateway:gt._id},function(err, zon){
+            regObj = {
+                gateway_id : req.params.gateway_id,
+                school_id : zon.school,
+                uuids  :     uuids,
+                response:   req.body,
+                lattitude :  lat,
+                longitude :  lng,
+                bearing :    bearing
+            };
+            if(uuids.length > 0){
+            const newAttendence = new attendenceModel(regObj);
+            attendenceModel.create(newAttendence, function (err, doc) {
+                res.status(200).json(
+                    [
+                        {
+                            "Status": true,
+                            "Msg": "Successfully Added"
+                        }
+                    ]
+                );
+            });
+        } else{
+                res.status(200).json(
+                    [
+                        {
+                            "Status": false,
+                            "Msg":"No ibeacan read"
+                        }
+                    ]
+                );
+        }
         });
+      });
     });
     router.get('/at\.:ext?', function (req, res) {
         var pagination = new Object();
