@@ -51,6 +51,7 @@ var loadRoutes = function (db, router, crypto) {
             db.loadModel('Zone').findOne({gateway:gt._id},function(err, zon){
             regObj = {
                 gateway_id : req.params.gateway_id,
+                zone: zon,
                 school_id : zon.school,
                 uuids  :     uuids,
                 response:   req.body,

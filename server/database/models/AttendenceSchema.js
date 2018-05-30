@@ -1,7 +1,8 @@
 'use strict';
 const mongoose = require('mongoose');
 const attendenceSchema = new mongoose.Schema({
-        gateway_id: { type: String, field: "mac", ref: 'Gateway' },
+        gateway_id: String,
+        zone: { type: mongoose.Schema.ObjectId, ref: 'Zone' },
         school_id: {type: mongoose.Schema.ObjectId, ref: 'School'},
         uuids: [],
         response:[],

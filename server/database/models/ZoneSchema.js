@@ -7,6 +7,7 @@ const zoneSchema = new mongoose.Schema({
         zoneType:{type: mongoose.Schema.ObjectId, ref: 'ZoneType'},
         school:{type: mongoose.Schema.ObjectId, ref: 'School'},
         gateway:{type: mongoose.Schema.ObjectId, ref: 'Gateway'},
+        readingDistance : String,
         createdOn: String,
         createdBy: String,
         modifiedOn: String,

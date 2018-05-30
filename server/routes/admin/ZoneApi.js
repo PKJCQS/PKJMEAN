@@ -2,7 +2,7 @@ var loadRoutes = function (db, router, crypto) {
     // Get all posts
     var model = db.loadModel('Zone');
     var Async = require('async');
-    var fields = '_id isActive name zoneType school location gateway createdOn createdBy modifiedOn modifiedBy';
+    var fields = '_id isActive name zoneType school location gateway readingDistance createdOn createdBy modifiedOn modifiedBy';
     router.get('/zones\.:ext/:page/:pageSize/:sortBy/:sortType?', function (req, res) {
         db.loadModel('School');
         db.loadModel('ZoneType');
