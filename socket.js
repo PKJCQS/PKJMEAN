@@ -53,7 +53,8 @@ function updateAttendence(school){
     var excep = [];
     var students = [];
     var sts = [];
-    var start = new Date(new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'}));
+    var indianTimeZoneVal = new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'});
+    var start = new Date(indianTimeZoneVal);
     start.setHours(0,0,0,0);
     start = new Date(start).getTime();
     var end = new Date();
@@ -127,7 +128,7 @@ function updateAttendence(school){
                 Async.map(zoneTypes,function(item, cb1) {
                     db1.loadModel('Zone').find({zoneType : item._id}, function (err, doc) {
                         Async.map(doc, function(zn, cb) {
-                            var d = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Calcutta"}));
+                            var d = new Date(indianTimeZoneVal);
                             var end1 = parseInt(d.getTime());
                             var start1 = parseInt(new Date(d.setMinutes(d.getMinutes()-10)).getTime());
                             console.log(start1,end1,d);
