@@ -50,6 +50,8 @@ var loadRoutes = function (db, router, crypto) {
         db.loadModel('Gateway').findOne({mac:req.params.gateway_id},function(err, gt){
             db.loadModel('Zone').findOne({gateway:gt._id},function(err, zon){
                 var indianTimeZoneVal = new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'});
+                var ind = new Date(indianTimeZoneVal);
+                ind.setDate(ind.getDate()-1);
                 var indainDateObj = new Date(indianTimeZoneVal).getTime();
             regObj = {
                 gateway_id : req.params.gateway_id,
