@@ -55,16 +55,17 @@ function updateAttendence(school){
     var sts = [];
     var start = new Date();
     start.setHours(0,0,0,0);
-
+    start = new Date(start).getTime();
     var end = new Date();
     end.setHours(23,59,59,999);
+    end = new Date(end).getTime();
     db1.loadModel('Gateway');
     db1.loadModel('School');
     db1.loadModel('Zone');
     var data = new Object();
     var types = db1.loadModel('ZoneType');
         
-    db1.loadModel('Attendence').find({"school_id":school, "createdOn": {$gte: start.toISOString(), $lt: end.toISOString()}}, function (err, doc) {
+    db1.loadModel('Attendence').find({"school_id":school, "createdOn": {$gte: start, $lt: end}}, function (err, doc) {
 
     }).populate('school_id').populate('zone')
     .exec().then(function (doc) {
@@ -75,9 +76,9 @@ function updateAttendence(school){
                 if(item1['uuid']){
                     var ibdata = item.response.find( ib => ib.ibeaconUuid === item1['uuid'] );
                     var distance = calculateDistance(ibdata.rssi, ibdata.ibeaconTxPower);
-                    
-                    //console.log(ibdata);
+                    //console.log(item1['uuid']);
                     db1.loadModel('Idcard').findOne({uuid:item1['uuid']},function(err1, doc1){
+                        //console.log(doc1);
                         if(doc1){
                             db1.loadModel('Student').findOne({idcard:doc1._id},function(err2, doc2){
                                 if(doc2) {
@@ -126,10 +127,12 @@ function updateAttendence(school){
                 Async.map(zoneTypes,function(item, cb1) {
                     db1.loadModel('Zone').find({zoneType : item._id}, function (err, doc) {
                         Async.map(doc, function(zn, cb) {
-                            var end = new Date();
-                            var start = end.setSeconds(end.getSeconds()-10);
-                            db1.loadModel('Attendence').find({"school_id":school,"createdOn": {$gte: start.toISOString(), $lt: end.toISOString()} }, function (err, stds) {
-                                console.log( stds );
+                            var d = new Date();
+                            var end1 = d.getTime();
+                            var start1 = new Date(d.setMinutes(d.getMinutes()-10)).getTime();
+                            //console.log(start1,end1,d);
+                            db1.loadModel('Attendence').find({"school_id":school,"createdOn": {$gte: start1, $lt: end1} }, function (err, stds) {
+                                //console.log(stds);
                                 Async.map(stds,function(item, callback) {
                                     var callb =1;
                                     for(var i =0; i < item.uuids.length; i++) {
@@ -160,7 +163,7 @@ function updateAttendence(school){
                         });
                     });
                 },function(err,results) {
-                    //console.log(students);
+                    console.log(excep);
                     data.exceptions = excep;
                     data.zoneTypes = results;
                     io.sockets.emit('latestAtendence', data);

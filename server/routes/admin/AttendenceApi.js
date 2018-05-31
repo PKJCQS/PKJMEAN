@@ -57,21 +57,22 @@ var loadRoutes = function (db, router, crypto) {
                 response:   req.body,
                 lattitude :  lat,
                 longitude :  lng,
-                bearing :    bearing
+                bearing :    bearing,
+                createdOn: parseInt(new Date().getTime())
             };
             if(uuids.length > 0){
-            const newAttendence = new attendenceModel(regObj);
-            attendenceModel.create(newAttendence, function (err, doc) {
-                res.status(200).json(
-                    [
-                        {
-                            "Status": true,
-                            "Msg": "Successfully Added"
-                        }
-                    ]
-                );
-            });
-        } else{
+                const newAttendence = new attendenceModel(regObj);
+                attendenceModel.create(newAttendence, function (err, doc) {
+                    res.status(200).json(
+                        [
+                            {
+                                "Status": true,
+                                "Msg": "Successfully Added"
+                            }
+                        ]
+                    );
+                });
+            } else{
                 res.status(200).json(
                     [
                         {

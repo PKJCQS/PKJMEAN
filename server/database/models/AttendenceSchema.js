@@ -9,7 +9,7 @@ const attendenceSchema = new mongoose.Schema({
         lattitude: String,
         longitude: String,
         bearing: String,
-        createdOn: { type:Date, default: Date.now,select: false}
+        createdOn: Number
     },
     {
         minimize: false,
