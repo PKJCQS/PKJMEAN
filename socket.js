@@ -53,12 +53,12 @@ function updateAttendence(school){
     var excep = [];
     var students = [];
     var sts = [];
-    var start = new Date();
+    var start = new Date().toLocaleString("en-US", {timeZone: "Asia/Calcutta"});
     start.setHours(0,0,0,0);
-    start = new Date(start).getTime();
+    start = new Date(start).toLocaleString("en-US", {timeZone: "Asia/Calcutta"}).getTime();
     var end = new Date();
     end.setHours(23,59,59,999);
-    end = new Date(end).getTime();
+    end = new Date(end).toLocaleString("en-US", {timeZone: "Asia/Calcutta"}).getTime();
     db1.loadModel('Gateway');
     db1.loadModel('School');
     db1.loadModel('Zone');
@@ -127,10 +127,10 @@ function updateAttendence(school){
                 Async.map(zoneTypes,function(item, cb1) {
                     db1.loadModel('Zone').find({zoneType : item._id}, function (err, doc) {
                         Async.map(doc, function(zn, cb) {
-                            var d = new Date();
+                            var d = new Date().toLocaleString("en-US", {timeZone: "Asia/Calcutta"});
                             var end1 = parseInt(d.getTime());
-                            var start1 = parseInt(new Date(d.setMinutes(d.getMinutes()-10)).getTime());
-                            //console.log(start1,end1,d);
+                            var start1 = parseInt(new Date(d.setMinutes(d.getMinutes()-10)).toLocaleString("en-US", {timeZone: "Asia/Calcutta"}).getTime());
+                            console.log(start1,end1,d);
                             db1.loadModel('Attendence').find({"school_id":school,"createdOn": {$gte: start1, $lt: end1} }, function (err, stds) {
                                 //console.log(stds);
                                 Async.map(stds,function(item, callback) {

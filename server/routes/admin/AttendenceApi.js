@@ -58,7 +58,7 @@ var loadRoutes = function (db, router, crypto) {
                 lattitude :  lat,
                 longitude :  lng,
                 bearing :    bearing,
-                createdOn: parseInt(new Date().getTime())
+                createdOn: parseInt(new Date().toLocaleString("en-US", {timeZone: "Asia/Calcutta"}).getTime())
             };
             if(uuids.length >= 0){
                 const newAttendence = new attendenceModel(regObj);
