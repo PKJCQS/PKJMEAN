@@ -123,7 +123,7 @@ function updateAttendence(school){
                 }
             }
         },function(r1){
-            types.find({},function(error, zoneTypes){
+            types.find({},function(error, zoneTypes){ 
                 Async.map(zoneTypes,function(item, cb1) {
                     db1.loadModel('Zone').find({zoneType : item._id}, function (err, doc) {
                         Async.map(doc, function(zn, cb) {

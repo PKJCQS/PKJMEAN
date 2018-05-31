@@ -57,7 +57,7 @@ var loadRoutes = function (db, router, crypto) {
                 response:   req.body,
                 lattitude :  lat,
                 longitude :  lng,
-                bearing :    bearing,
+                bearing :    bearing, 
                 createdOn: parseInt(new Date().toLocaleString("en-US", {timeZone: "Asia/Calcutta"}).getTime())
             };
             if(uuids.length >= 0){
