@@ -66,8 +66,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let alert of alerts; let i=index;">
-              <td>Task {{alert.gateway_id + i}}</td>
+            <tr *ngFor="let z of zt; let i=index;">
+              <td>
+                {{z.zoneType.name}}
+                <table class="table table-hover dashboard-task-infos">
+                  <tr *ngFor="let zon of z.zone; let j=index;">
+                    <td>{{zon.zone.name}} (<strong> {{zon.count_ids}} </strong>)</td>
+                  </tr>
+                </table>
+              </td>
             </tr>
             </tbody>
           </table>

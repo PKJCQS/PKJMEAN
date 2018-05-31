@@ -10,6 +10,7 @@ declare var $: any;
 })
 export class StaffhomeComponent implements OnInit, AfterViewInit {
     public alerts: any;
+    public zt: any;
     private url = 'http://localhost:5000/';
     private socket;
     private schoolId: any;
@@ -23,8 +24,9 @@ export class StaffhomeComponent implements OnInit, AfterViewInit {
       this.socket = io(this.url);
       this.socket.emit('setSchool', this.schoolId);
       this.socket.on('latestAtendence', (data) => {
-          this.alerts = data;
-          console.log(this.alerts);
+          this.alerts = data['exceptions'];
+          this.zt = data['zoneTypes'];
+          // console.log(this);
       });
   }
     logOut() {
