@@ -128,8 +128,8 @@ function updateAttendence(school){
                     db1.loadModel('Zone').find({zoneType : item._id}, function (err, doc) {
                         Async.map(doc, function(zn, cb) {
                             var d = new Date();
-                            var end1 = d.getTime();
-                            var start1 = new Date(d.setMinutes(d.getMinutes()-10)).getTime();
+                            var end1 = parseInt(d.getTime());
+                            var start1 = parseInt(new Date(d.setMinutes(d.getMinutes()-10)).getTime());
                             //console.log(start1,end1,d);
                             db1.loadModel('Attendence').find({"school_id":school,"createdOn": {$gte: start1, $lt: end1} }, function (err, stds) {
                                 //console.log(stds);
@@ -163,7 +163,7 @@ function updateAttendence(school){
                         });
                     });
                 },function(err,results) {
-                    console.log(excep);
+                    //console.log(excep);
                     data.exceptions = excep;
                     data.zoneTypes = results;
                     io.sockets.emit('latestAtendence', data);

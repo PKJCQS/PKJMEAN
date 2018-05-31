@@ -60,7 +60,7 @@ var loadRoutes = function (db, router, crypto) {
                 bearing :    bearing,
                 createdOn: parseInt(new Date().getTime())
             };
-            if(uuids.length > 0){
+            if(uuids.length >= 0){
                 const newAttendence = new attendenceModel(regObj);
                 attendenceModel.create(newAttendence, function (err, doc) {
                     res.status(200).json(

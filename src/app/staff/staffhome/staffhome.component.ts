@@ -26,7 +26,7 @@ export class StaffhomeComponent implements OnInit, AfterViewInit {
       this.socket.on('latestAtendence', (data) => {
           this.alerts = data['exceptions'];
           this.zt = data['zoneTypes'];
-          // console.log(this);
+          console.log(data);
       });
   }
     logOut() {
