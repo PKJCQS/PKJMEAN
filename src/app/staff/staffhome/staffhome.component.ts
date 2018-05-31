@@ -16,6 +16,7 @@ export class StaffhomeComponent implements OnInit, AfterViewInit {
     private schoolId: any;
   constructor(private route: Router, private cookieService: CookieService) {
       this.schoolId = this.cookieService.get('schoolId');
+      console.log(this.route.url);
   }
 
   ngOnInit() {
