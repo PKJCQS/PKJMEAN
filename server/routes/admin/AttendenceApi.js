@@ -49,6 +49,7 @@ var loadRoutes = function (db, router, crypto) {
         };
         db.loadModel('Gateway').findOne({mac:req.params.gateway_id},function(err, gt){
             db.loadModel('Zone').findOne({gateway:gt._id},function(err, zon){
+                var d = new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'});
             regObj = {
                 gateway_id : req.params.gateway_id,
                 zone: zon,
@@ -58,7 +59,7 @@ var loadRoutes = function (db, router, crypto) {
                 lattitude :  lat,
                 longitude :  lng,
                 bearing :    bearing, 
-                createdOn: parseInt(new Date().toLocaleString("en-US", {timeZone: "Asia/Calcutta"}).getTime())
+                createdOn: new Date(d).getTime()
             };
             if(uuids.length >= 0){
                 const newAttendence = new attendenceModel(regObj);
