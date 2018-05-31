@@ -11,12 +11,11 @@ declare var $: any;
 export class StaffhomeComponent implements OnInit, AfterViewInit {
     public alerts: any;
     public zt: any;
-    private url = 'http://localhost:5000/';
+    private url = window.location.protocol + '//' + window.location.hostname + ':5000/';
     private socket;
     private schoolId: any;
   constructor(private route: Router, private cookieService: CookieService) {
       this.schoolId = this.cookieService.get('schoolId');
-      console.log(this.route.url);
   }
 
   ngOnInit() {
