@@ -129,7 +129,7 @@ function updateAttendence(school){
                             var end = new Date();
                             var start = end.setSeconds(end.getSeconds()-10);
                             db1.loadModel('Attendence').find({"school_id":school,"createdOn": {$gte: start.toISOString(), $lt: end.toISOString()} }, function (err, stds) {
-                                console.log(stds);
+                                console.log( stds );
                                 Async.map(stds,function(item, callback) {
                                     var callb =1;
                                     for(var i =0; i < item.uuids.length; i++) {
