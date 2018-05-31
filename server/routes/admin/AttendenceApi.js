@@ -52,7 +52,7 @@ var loadRoutes = function (db, router, crypto) {
                 var indianTimeZoneVal = new Date().toLocaleString('en-US', {timeZone: 'Asia/Kolkata'});
                 var ind = new Date(indianTimeZoneVal);
                 ind.setDate(ind.getDate()-1);
-                var indainDateObj = new Date(indianTimeZoneVal).getTime();
+                var indainDateObj = new Date(ind).getTime();
             regObj = {
                 gateway_id : req.params.gateway_id,
                 zone: zon,
