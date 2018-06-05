@@ -79,6 +79,21 @@
                 </mat-slide-toggle>
 
             </div>
+            <div class="form-group form-float">
+                <h2 class="text-center">Teacher Access Area</h2>
+            </div>
+            <div class="form-group form-float">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" *ngFor="let ztype of zoneTypes; let i=index">
+                    <input type="checkbox" [id]="'zoneType' + ztype.zoneType._id" [checked]="access.indexOf(ztype.zoneType._id) >= 0" [value]="ztype.zoneType._id" [class]="'filled-in chk-col-blue zoneType' + ztype.zoneType._id"  (change)="setAttr($event, ztype.zoneType._id, ztype.zone);"/>
+                    <label [for]="'zoneType' + ztype.zoneType._id"> {{ztype.zoneType.name}}</label>
+                    <div class="list-group">
+                        <div class="list-group-item" *ngFor="let zone of ztype.zone; let j=index">
+                            <input type="checkbox" [value]="zone._id" [checked]="access.indexOf(zone._id) >= 0"  [class]="'filled-in chk-col-blue zone' + ztype.zoneType._id"  [id]="'zone' + zone._id"  (change)="setAttr($event, zone._id, '');"/>
+                            <label [for]="'zone' + zone._id">{{zone.name}}</label></div>
+                    </div>
+                </div>
+            </div>
+          <div class="clearfix"></div> 
           <button class="btn btn-primary waves-effect" type="submit">SAVE TEACHER</button>
         </form>
       </div>

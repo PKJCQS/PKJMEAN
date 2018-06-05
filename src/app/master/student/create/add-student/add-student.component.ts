@@ -94,7 +94,7 @@ export class AddStudentComponent implements OnInit, AfterViewInit {
             }
         });
     }
-    public setAttr(event, z, zones) {
+    public setAttr(event: any, z: any, zones: any) {
         console.log(event, z, zones);
         let index: number = this.access.indexOf(z);
         console.log(index);
@@ -103,7 +103,7 @@ export class AddStudentComponent implements OnInit, AfterViewInit {
                 this.access.push(z);
                 if (zones !== '') {
                     for (let i in zones) {
-                        console.log(this);
+                        //console.log(this);
                         let index1: number = this.access.indexOf(zones[i]._id);
                         if (index1 === -1) {
                             this.access.push(zones[i]._id);
@@ -124,11 +124,11 @@ export class AddStudentComponent implements OnInit, AfterViewInit {
                 }
             }
         }
-        console.log(this.access);
+        // console.log(this.access);
     }
 
     public saveStudent(event) {
-        console.log(this.student, this.access);
+        // console.log(this.student, this.access);
         this.student['access'] = this.access;
         if ($('#form_validation').valid()) {
             this.studentService.save(this.student).subscribe(response => {

@@ -60,123 +60,83 @@ function updateAttendence(school){
     var end = new Date();
     end.setHours(23,59,59,999);
     end = new Date(end).getTime();
+    //console.log(start,end);
+    var d = new Date(indianTimeZoneVal);
+    var end1 = parseInt(d.getTime());
+    var start1 = parseInt(new Date(d.setMinutes(d.getMinutes()-10)).getTime());
     db1.loadModel('Gateway');
     db1.loadModel('School');
     db1.loadModel('Zone');
     var data = new Object();
     var types = db1.loadModel('ZoneType');
         
-    db1.loadModel('Attendence').find({"school_id":school, "createdOn": {$gte: start, $lt: end}}, function (err, doc) {
+    db1.loadModel('Alerts').find({"school_id":school, "createdOn": {$gte: start, $lt: end}}, function (err, doc) {
 
-    }).populate('school_id').populate('zone')
-    .exec().then(function (doc) {
-        Async.map(doc,function(item, callback) {
-            var callb =0;
-            for(var i =0; i < item.uuids.length; i++) {
-                var item1 = item.uuids[i];
-                if(item1['uuid']){
-                    var ibdata = item.response.find( ib => ib.ibeaconUuid === item1['uuid'] );
-                    var distance = calculateDistance(ibdata.rssi, ibdata.ibeaconTxPower);
-                    //console.log(item1['uuid']);
-                    db1.loadModel('Idcard').findOne({uuid:item1['uuid']},function(err1, doc1){
-                        //console.log(doc1);
-                        if(doc1){
-                            db1.loadModel('Student').findOne({idcard:doc1._id},function(err2, doc2){
-                                if(doc2) {
-                                    db1.loadModel('ZoneType').findOne({_id:item.zone.zoneType},function(err3, doc3){
-                                        //console.log(doc2.access, item.zone._id);
-                                        //console.log(doc2.access.indexOf(item.zone._id), distance, parseInt(item.zone.readingDistance), (doc2.access.indexOf(item.zone._id)===-1 && distance < parseInt(item.zone.readingDistance)));
-                                        if(doc2.access.indexOf(item.zone._id)===-1 && distance < parseInt(item.zone.readingDistance)){
-                                            if(students.indexOf(doc2._id.toString())==-1){
-                                                students.push(doc2._id.toString());
-                                                excep.push({createdOn: item.createdOn, student:doc2, zone: item.zone,zoneType: doc3, distance:distance});
-                                                if(callb==0){
-                                                    callb = 1;
-                                                    callback({createdOn: item.createdOn, student:doc2, zone: item.zone,zoneType: doc3, distance:distance});
-                                                }
-                                            }
-                                            
-                                        }
-                                    });
-                                }
-                                else{
-                                    db1.loadModel('Teacher').findOne({idcard:doc1._id},function(err4, doc4){
-                                        if(doc4){
-                                            db1.loadModel('ZoneType').findOne({_id:item.zone.zoneType},function(err3, doc3){
-                                                if(doc4.access.indexOf(item.zone._id.toString())===-1 && distance < parseInt(item.zone.readingDistance)){
-                                                    if(students.indexOf(doc4._id.toString())==-1){
-                                                        students.push(doc4._id.toString());
-                                                        excep.push({createdOn: item.createdOn, student:doc4, zone: item.zone,zoneType: doc3, distance:distance});
-                                                        if(callb==0){
-                                                            callb = 1;
-                                                            callback({createdOn: item.createdOn, student:doc4, zone: item.zone,zoneType: doc3, distance:distance});
+    }).populate('school_id').populate('zone').populate('gateway').populate('gatewaydata').populate('idcard').populate('teacher').populate('student')
+    .exec().then(function (excep) {
+        var d = new Date(indianTimeZoneVal);
+        var end1 = parseInt(d.getTime());
+        var start1 = parseInt(new Date(d.setMinutes(d.getMinutes()-10)).getTime());
+        // console.log(start1,end1,d);
+        db1.loadModel('Gatewaydata').find({"school_id":school,"createdOn": {$gte: start1, $lt: end1} }, function (err, stds) {
+            types.find({},function(error, zoneTypes){ 
+                if(zoneTypes) {
+                    Async.map(zoneTypes,function(item, cb1) {
+                        db1.loadModel('Zone').find({zoneType : item._id}, function (err, doc) {
+                            if(doc){
+                                Async.map(doc, function(zn, cb) {
+                                    //cb(null,{zone:zn,count_ids:sts[zn._id].length});
+                                        sts[zn.__id] = [];
+                                        if(stds){
+                                            Async.map(stds,function(item, callback) {
+                                                var callb = 1;
+                                                for(var i =0; i < item.uuids.length; i++) {
+                                                    if(i==item.uuids.length-1) {
+                                                        callb = 0
+                                                    }
+                                                    var item1 = item.uuids[i];
+                                                    
+                                                    if(item1['uuid']){
+                                                        var ibdata = item.response.find( ib => ib.ibeaconUuid === item1['uuid'] );
+                                                        var distance = calculateDistance(ibdata.rssi, ibdata.ibeaconTxPower);
+                                                        console.log(distance, parseInt(zn.readingDistance));
+                                                        if(distance < parseInt(zn.readingDistance) && sts[zn.__id].indexOf(item1['uuid'])===-1){
+                                                            if(item.zone==zn.__id){
+                                                                sts[zn.__id].push(item1['uuid']);
+                                                            }
                                                         }
                                                     }
-                                                   
+                                                    
+                                                    if(callb==0) {
+                                                        callback(sts[zn.__id].length);
+                                                    }
                                                 }
+                                            },function(rss){
+                                                console.log(rss,'sts');
+                                                var count = sts.length;
+                                                cb(null,{zone:zn, count_ids: count});
                                             });
                                         }
-                                    });
-                                }
-                            });
-                        }
+                                },function(err,rs) {
+                                    //console.log('zone',rs);
+                                    cb1(null,{zoneType:item, zone: rs});
+                                });
+                            }
+                        });
+                    },function(err,results) {
+                        console.log(students);
+                        data.exceptions = excep;
+                        data.zoneTypes = results;
+                        io.sockets.emit('latestAtendence', data);
+                        setTimeout(function(){updateAttendence(school);},5000);
                     });
                 }
-            }
-        },function(r1){
-            types.find({},function(error, zoneTypes){ 
-                Async.map(zoneTypes,function(item, cb1) {
-                    db1.loadModel('Zone').find({zoneType : item._id}, function (err, doc) {
-                        Async.map(doc, function(zn, cb) {
-                            var d = new Date(indianTimeZoneVal);
-                            var end1 = parseInt(d.getTime());
-                            var start1 = parseInt(new Date(d.setMinutes(d.getMinutes()-10)).getTime());
-                            console.log(start1,end1,d);
-                            db1.loadModel('Attendence').find({"school_id":school,"createdOn": {$gte: start1, $lt: end1} }, function (err, stds) {
-                                //console.log(stds);
-                                Async.map(stds,function(item, callback) {
-                                    var callb =1;
-                                    for(var i =0; i < item.uuids.length; i++) {
-                                        if(i==item.uuids.length-1) {
-                                            callb = 0
-                                        }
-                                        var item1 = item.uuids[i];
-                                        if(item1['uuid']){
-                                            var ibdata = item.response.find( ib => ib.ibeaconUuid === item1['uuid'] );
-                                            var distance = calculateDistance(ibdata.rssi, ibdata.ibeaconTxPower);
-                                        }
-                                        if(distance < parseInt(item.zone.readingDistance) && sts.indexOf(item1['uuid'])===-1){
-                                            sts.push(item1['uuid']);
-                                        }
-                                        if(callb==0) {
-                                            callback('hi');
-                                        }
-                                    }
-                                },function(rss){
-                                    //console.log(rss);
-                                    var count = sts.length;
-                                    cb(null,{zone:zn, count_ids: count});
-                                });
-                            });
-                        },function(err,rs) {
-                            //console.log('zone',rs);
-                            cb1(null,{zoneType:item, zone: rs});
-                        });
-                    });
-                },function(err,results) {
-                    //console.log(excep);
-                    data.exceptions = excep;
-                    data.zoneTypes = results;
-                    io.sockets.emit('latestAtendence', data);
-                    setTimeout(function(){updateAttendence(school);},5000);
-                });
             });
-            
-            //data.exceptions = exceptions;
-            //data.zoneTypes = results;
-            //io.sockets.emit('latestAtendence', data);
-            //setTimeout(function(){updateAttendence(school);},5000);
-        });
+        });        
+                //data.exceptions = exceptions;
+                //data.zoneTypes = results;
+                //io.sockets.emit('latestAtendence', data);
+                //setTimeout(function(){updateAttendence(school);},5000);
         // io.sockets.emit('latestAtendence', doc);
         //     setTimeout(function(){updateAttendence(school);},5000);
 });

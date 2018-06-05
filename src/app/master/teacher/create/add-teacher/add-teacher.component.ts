@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '../../../subject/subject.service';
 import {SchoolService} from '../../../school/school.service';
 import {IdcardService} from '../../../idcard/idcard.service';
+import { ZoneService } from '../../../zone/zone.service';
 declare var $: any;
 
 
@@ -18,12 +19,15 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
     public options: any;
     public schools: any;
     public idCards: any;
+    public zoneTypes: any;
+    public access: any = [];
     color = 'primary';
     @ViewChild('search')
     public searchElementRef: ElementRef;
     constructor( private teacherService: TeacherService,
                  private route: Router,
                  private route1: ActivatedRoute,
+                 private zoneService: ZoneService,
                  private schoolService: SchoolService,
                  private idCardService: IdcardService,
                  private subjectService: SubjectService) {
@@ -33,8 +37,9 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
         });
         if ( this.teacherId ) {
             this.teacherService.getTeacher( this.teacherId).subscribe(response => {
-                console.log(response);
+                // console.log(response);
                 this.teacher = response['data'];
+                this.access = response['data']['access'];
                 let subjs = [];
                 let i = 0;
                 if (response['subjects']) {
@@ -44,6 +49,7 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
                     }
                 }
                 this.teacher.subjects = subjs;
+                // console.log(this.access);
             });
         }
         this.subjectService.getAllSubjectsWithFilter('').subscribe(response => {
@@ -54,6 +60,9 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
         });
         this.idCardService.getAllIdCardsWithFilter('').subscribe(response => {
             this.idCards = response;
+        });
+        this.zoneService.getAllZoneByTye().subscribe(response => {
+            this.zoneTypes = response;
         });
     }
 
@@ -80,8 +89,39 @@ export class AddTeacherComponent implements OnInit, AfterViewInit {
             }
         });
     }
+    public setAttr(event, z, zones) {
+        let index: number = this.access.indexOf(z);
+        if (event.target.checked) {
+            if (index === -1) {
+                this.access.push(z);
+                if (zones !== '') {
+                    for (let i in zones) {
+                        console.log(this);
+                        let index1: number = this.access.indexOf(zones[i]._id);
+                        if (index1 === -1) {
+                            this.access.push(zones[i]._id);
+                        }
+                    }
+                }
+            }
+        } else {
+            if (index >= 0) {
+                this.access.splice(index, 1);
+                if (zones !== '') {
+                    for (let i in zones) {
+                        let index1: number = this.access.indexOf(zones[i]._id);
+                        if (index1 >= 0) {
+                            this.access.splice(index1, 1);
+                        }
+                    }
+                }
+            }
+        }
+        //console.log(this.access);
+    }
     public saveTeacher(event) {
         if ($('#form_validation').valid()) {
+            this.teacher['access'] = this.access;
             this.teacherService.save(this.teacher).subscribe(response => {
                 this.teacher = response;
                 this.route.navigate(['cpanel/master/teacher/view-all']);

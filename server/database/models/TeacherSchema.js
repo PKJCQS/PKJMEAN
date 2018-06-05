@@ -10,6 +10,7 @@ const teacherSchema = new mongoose.Schema({
         school:{type: mongoose.Schema.ObjectId, ref: 'School'},
         address: String,
         password: String,
+        access: [],
         createdOn: String,
         createdBy: String,
         modifiedOn: String,

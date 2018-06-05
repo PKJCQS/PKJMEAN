@@ -2,7 +2,7 @@ var loadRoutes = function (db, router, crypto) {
     // Get all posts
     var model = db.loadModel('Teacher');
     var modelInfo = db.loadModel('TeacherInfo');
-    var fields = '_id isActive firstName lastName email mobile idcard school address createdOn createdBy modifiedOn modifiedBy';
+    var fields = '_id isActive firstName lastName email mobile access idcard school address createdOn createdBy modifiedOn modifiedBy';
     router.get('/teachers\.:ext/:page/:pageSize/:sortBy/:sortType?', function (req, res) {
         db.loadModel('TeacherInfo');
         db.loadModel('Idcard');
@@ -43,6 +43,7 @@ var loadRoutes = function (db, router, crypto) {
             mobile: req.body.teacher.mobile,
             idcard: req.body.teacher.idcard,
             school: req.body.teacher.school,
+            access: req.body.teacher.access,
             address:req.body.teacher.address,
             password: crypto.encrypt(req.body.teacher.password),
             createdOn: req.body.teacher.createdOn,
@@ -112,6 +113,7 @@ var loadRoutes = function (db, router, crypto) {
             idcard: req.body.teacher.idcard,
             school: req.body.teacher.school,
             address:req.body.teacher.address,
+            access: req.body.teacher.access,
             password: req.body.teacher.password ? crypto.encrypt(req.body.teacher.password) : '',
             modifiedOn: req.body.teacher.modifiedOn,
             modifiedBy: req.body.teacher.modifiedBy
